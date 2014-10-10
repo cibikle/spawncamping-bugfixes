@@ -17,9 +17,9 @@ public class CharacterCreationAssistant {
 
    private static String mainMenu = "(N)ew, (O)pen, (H)elp, (Q)uit";
    private static BufferedReader kb;
-   private static boolean run  = true;
-   private static String[] characteristics3d6 = {"3d6", "STR", "CON", "POW","DEX", "CHA"};
-   private static String[] characteristics2d6Plus6 = {"2d6+6", "INT","SIZ"};
+   private static boolean run = true;
+   private static String[] characteristics3d6 = {"3d6", "STR", "CON", "POW", "DEX", "CHA"};
+   private static String[] characteristics2d6Plus6 = {"2d6+6", "INT", "SIZ"};
    private static String[] characteristics3d6Plus3 = {"3d6+3", "EDU"};
    private static String[] characteristics2d6Plus17 = {"2d6+17", "AGE"};
 
@@ -32,23 +32,48 @@ public class CharacterCreationAssistant {
       mainMenu();
 
    }
-   
+
    private static char getCharFromUser() throws IOException {
-      return kb.readLine().charAt(0);
+      try {
+         return getStringFromUser().charAt(0);
+      } catch (StringIndexOutOfBoundsException e) {
+         return ' ';
+      }
    }
-   
+
    private static int getIntFromUser() throws IOException {
-      String s = kb.readLine();
+      String s = getStringFromUser();
       try {
          return Integer.parseInt(s);
       } catch (NumberFormatException e) {
-         println("Not a number: "+s);
+         println("Not a number: " + s);
          return -1;
       }
    }
-   
+
    private static String getStringFromUser() throws IOException {
       return kb.readLine();
+   }
+
+   private static char getValidResponseFromUser(String msg, char[] acceptedResponses) throws IOException {
+      println(msg);
+      char c = getCharFromUser();
+      while (!characterArrayContains(acceptedResponses, c)) {
+         println("Invalid response: " + c);
+         println(msg);
+         c = getCharFromUser();
+      }
+
+      return c;
+   }
+
+   private static boolean characterArrayContains(char[] charArray, char c) {
+      for (int i = 0; i < charArray.length; i++) {
+         if (charArray[i] == c) {
+            return true;
+         }
+      }
+      return false;
    }
 
    private static void mainMenu() throws IOException {
@@ -73,87 +98,110 @@ public class CharacterCreationAssistant {
                break;
          }
       }
-      
+
    }
-   
-   private static void quit() {
-      run = false;
-      println("Goodbye!");
+
+   private static void quit() throws IOException {
+      char[] acceptedResponses = {'y', 'n', 'q'};
+      char c = getValidResponseFromUser("Are you sure you want to quit?  (Y)es/(N)o", acceptedResponses);
+      switch (c) {
+         case 'q'://same as case 'y'
+         case 'y':
+            run = false;
+            println("Goodbye!");
+            break;
+         case 'n':
+            break;
+      }
    }
-   
+
    private static void help() {
       println("Method not yet implemented, which is just about the worst thing to hear right now, I know.");
    }
-   
+
    private static void openCharacter() {
       println("Method not yet implemented, which is just about the worst thing to hear right now, I know.");
    }
-   
+
    private static void newCharacter() throws IOException {
+      int[] characteristics;
       println("Right now, only PC creation is supported, but you could probably make NPC creation work. Just FYI.");
-      
-      char c = ' ';
-      boolean r = true;
-      while(r) {
-         println("Autoroll for characteristics?\n(Y)es, roll for me/(N)o, I want to enter my own.");
-         c = getCharFromUser();
-         switch (Character.toLowerCase(c)) {
-            case 'y' :
-               r = false;
-               autoRollCharacteristicScores();
-               break;
-            case 'n' :
-               r = false;
-               getCharacteristicScoresFromUser();
-               break;
-            default:
-               println("Invalid command: "+c);
-               break;
-         }
+      char[] acceptedResponses = {'y', 'n', 'a', 'q'};
+      char c = getValidResponseFromUser("Autoroll for characteristics?\n(Y)es, roll for me/(N)o, I want to enter my own.", acceptedResponses);
+      switch (Character.toLowerCase(c)) {
+         case 'y':
+            characteristics = autoRollCharacteristicScores();
+            break;
+         case 'n':
+            characteristics = getCharacteristicScoresFromUser();
+            break;
+         case 'a':
+            println("Returning to main menu.");
+            return;
+         case 'q':
+            quit();
+            return;
       }
+
+      println("see?");
+
    }
-   
-   private static void getCharacteristicScoresFromUser() throws IOException {
-      int[] characteristics = new int[characteristics3d6.length-1 + characteristics2d6Plus6.length-1 + characteristics3d6Plus3.length-1 +characteristics2d6Plus17.length-1];
+
+   private static int[] getCharacteristicScoresFromUser() throws IOException {
+      int[] characteristics = new int[characteristics3d6.length - 1 + characteristics2d6Plus6.length - 1 + characteristics3d6Plus3.length - 1 + characteristics2d6Plus17.length - 1];
       getSetOfRolls(3, 18, characteristics3d6);
       getSetOfRolls(8, 18, characteristics2d6Plus6);
       getSetOfRolls(6, 21, characteristics3d6Plus3);
       getSetOfRolls(19, 29, characteristics2d6Plus17);
-   }
-   
-   private static int[] getSetOfRolls(int min, int max, String[] characteristicNames) throws IOException {
-      int[] characteristics = new int[characteristicNames.length-1];
-      int x = 0;
-      char c = ' ';
-      println("The following are rolled with "+characteristicNames[0]+".");
-      for(int i = 1; i < characteristicNames.length; i++) {
-         characteristics[i-1] = -1;
-         print(characteristicNames[i]+": ");
-         x = getIntFromUser();
-         while((x < min || x > max) && characteristics[i-1] == -1) {
-            println("Value cannot be lower than "+min+" or higher than "+max+" unless special circumstances apply.\nProceed?  (Y)es/(N)o");
-            c = getCharFromUser();
-            while(Character.toLowerCase(c) != 'y' && Character.toLowerCase(c) != 'n') {
-               println("Invalid response: "+c);
-               c = getCharFromUser();
-            }
-            if (Character.toLowerCase(c) == 'y') {
-               characteristics[i-1] = x;
-            } else {
-               print(characteristicNames[i]+": ");
-               x = getIntFromUser();
-            }
-         }
-         characteristics[i-1] = x;
-      }
-      
-      println(Arrays.toString(characteristics));
-      
+
       return characteristics;
    }
-   
-   private static void autoRollCharacteristicScores() {
-      
+
+   private static int[] getSetOfRolls(int min, int max, String[] characteristicNames) throws IOException {
+      int[] characteristics = new int[characteristicNames.length - 1];
+      int x = 0;
+      char c = ' ';
+
+      println("The following are rolled with " + characteristicNames[0] + ".");
+      for (int i = 1; i < characteristicNames.length; i++) {
+         characteristics[i - 1] = -1;
+         x = getValidRollFromUser(min, max, characteristicNames[i] + ": ");
+
+         characteristics[i - 1] = x;
+      }
+
+      println(Arrays.toString(characteristics));
+
+      return characteristics;
+   }
+
+   private static int getValidRollFromUser(int min, int max, String prompt) throws IOException {
+      String msg = "Value cannot be lower than " + min + " or higher than " + max + " unless special circumstances apply.\nProceed?  (Y)es/(N)o";
+      char[] acceptedResponses = {'y', 'n', 'q'};
+
+      println(prompt);
+      int x = getIntFromUser();
+      while (x < min || x > max) {
+         char c = getValidResponseFromUser(msg, acceptedResponses);
+         switch (Character.toLowerCase(c)) {
+            case 'q':
+               quit();
+               return -1;
+            case 'n':
+               println(prompt);
+               x = getIntFromUser();
+               break;
+            case 'y':
+               return x;
+         }
+      }
+
+      return x;
+   }
+
+   private static int[] autoRollCharacteristicScores() {
+
+      return null;
    }
 
    private static void print(String s) {
