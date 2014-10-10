@@ -216,9 +216,36 @@ public class CharacterCreationAssistant {
       return x;
    }
 
-   private static int[] autoRollCharacteristicScores() {
-
-      return null;
+   private static int[] autoRollCharacteristicScores() throws IOException {
+      int[] characteristics = new int[characteristics3d6.length - 1 + characteristics2d6Plus6.length - 1 + characteristics3d6Plus3.length - 1 + characteristics2d6Plus17.length - 1];
+      int j;
+      Dice threeD6 = new Dice(3, 6);
+      Dice twoD6 = new Dice(2, 6);
+      String msg = "(K)eep or (R)eroll?";
+      char[] acceptedResponses = {'k','r','a','q'};
+      
+      do {
+         j = 0;
+         for (int i = 0; i < characteristics3d6.length - 1; i++) {
+            characteristics[j] = threeD6.rollDice();
+            j++;
+         }
+         for (int i = 0; i < characteristics2d6Plus6.length - 1; i++) {
+            characteristics[j] = twoD6.rollDice() + 6;
+            j++;
+         }
+         for (int i = 0; i < characteristics3d6Plus3.length - 1; i++) {
+            characteristics[j] = threeD6.rollDice() + 3;
+            j++;
+         }
+         for (int i = 0; i < characteristics2d6Plus17.length - 1; i++) {
+            characteristics[j] = twoD6.rollDice() + 17;
+            j++;
+         }
+         println(Arrays.toString(characteristics));
+      } while (Character.toLowerCase(getValidResponseFromUser(msg, acceptedResponses)) == 'r');
+      
+      return characteristics;
    }
 
    private static void print(String s) {
