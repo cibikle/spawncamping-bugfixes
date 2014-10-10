@@ -12,9 +12,11 @@ import java.util.ArrayList;
  */
 public class Dice {
    private ArrayList<Die> dice = new ArrayList<Die>();
+   private String name;
    private boolean percentageDice = false;
    
    public Dice(int n, int d) {
+      name = n+"d"+d;
       for(int i = 0; i < n; i++) {
          dice.add(new Die(d));
       }
@@ -26,15 +28,18 @@ public class Dice {
       }
       
       for(int i = 0; i < n.length; i++) {
+         name += " + "+n[i]+"d"+d[i];
          for(int j = 0; j < n[i]; j++) {
             dice.add(new Die(d[i]));
          }
       }
+      
+      name = name.substring(name.indexOf(" + "));
    }
    
    public Dice(boolean percentageDice) {
       this.percentageDice = true;
-      
+      name = "percentage dice";
       dice.add(new Die(10));
    }
    
@@ -51,5 +56,9 @@ public class Dice {
          }
          return roll;
       }
+   }
+   
+   public String toString() {
+      return name;
    }
 }
