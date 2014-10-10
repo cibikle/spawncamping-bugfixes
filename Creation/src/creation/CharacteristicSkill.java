@@ -45,4 +45,8 @@ public class CharacteristicSkill {
    public void setSkillLevel(int skillLevel) {
       this.skillLevel = skillLevel;
    }
+   
+   public String toString() {
+      return name+": "+skillLevel;
+   }
 }
