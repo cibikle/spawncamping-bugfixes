@@ -340,4 +340,28 @@ public class RPG_Character {
       this.possessions = possessions;
       this.skills = skills;
    }
+   
+   public RPG_Character(int[] characteristsics, String name, Dice DB,
+           boolean negativeDB, int[] derivedCharacteristics, 
+           ArrayList<String> possessions, ArrayList<Skill> skills) {
+      this.STR = characteristsics[0];
+      this.CON = characteristsics[1];
+      this.POW = characteristsics[2];
+      this.DEX = characteristsics[3];
+      this.CHA = characteristsics[4];
+      this.INT = characteristsics[5];
+      this.SIZ = characteristsics[6];
+      this.EDU = characteristsics[7];
+      this.AGE = characteristsics[8];
+      this.name = name;
+      this.DB = DB;
+      this.negativeDB = negativeDB;
+      this.maxHP = derivedCharacteristics[0];
+      this.majorWoundLevel = derivedCharacteristics[1];
+      this.xpBonus = derivedCharacteristics[2];
+      this.MOV = derivedCharacteristics[3];
+      this.SAN = derivedCharacteristics[4];
+      this.possessions = possessions;
+      this.skills = skills;
+   }
 }
