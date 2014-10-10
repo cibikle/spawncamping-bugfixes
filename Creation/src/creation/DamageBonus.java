@@ -44,4 +44,13 @@ public class DamageBonus {
    public void setNegativeDB(boolean negativeDB) {
       this.negativeDB = negativeDB;
    }
+   
+   public String toString() {
+      String s = db.toString();
+      if(negativeDB) {
+         s = "-" + s;
+      }
+      
+      return s;
+   }
 }
