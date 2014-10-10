@@ -124,7 +124,7 @@ public class CharacterCreationAssistant {
    }
 
    private static void newCharacter() throws IOException {
-      int[] characteristics;
+      int[] characteristics = {1};
       println("Right now, only PC creation is supported, but you could probably make NPC creation work. Just FYI.");
       char[] acceptedResponses = {'y', 'n', 'a', 'q'};
       char c = getValidResponseFromUser("Autoroll for characteristics?\n(Y)es, roll for me/(N)o, I want to enter my own.", acceptedResponses);
@@ -143,16 +143,33 @@ public class CharacterCreationAssistant {
             return;
       }
 
-      println("see?");
+      println(Arrays.toString(characteristics));
 
    }
 
    private static int[] getCharacteristicScoresFromUser() throws IOException {
       int[] characteristics = new int[characteristics3d6.length - 1 + characteristics2d6Plus6.length - 1 + characteristics3d6Plus3.length - 1 + characteristics2d6Plus17.length - 1];
-      getSetOfRolls(3, 18, characteristics3d6);
-      getSetOfRolls(8, 18, characteristics2d6Plus6);
-      getSetOfRolls(6, 21, characteristics3d6Plus3);
-      getSetOfRolls(19, 29, characteristics2d6Plus17);
+      int j = 0;
+      int[] x = getSetOfRolls(3, 18, characteristics3d6);
+      for(int i = 0; i < x.length; i++) {
+         characteristics[j] = x[i];
+         j++;
+      }
+      x = getSetOfRolls(8, 18, characteristics2d6Plus6);
+      for(int i = 0; i < x.length; i++) {
+         characteristics[j] = x[i];
+         j++;
+      }
+      x = getSetOfRolls(6, 21, characteristics3d6Plus3);
+      for(int i = 0; i < x.length; i++) {
+         characteristics[j] = x[i];
+         j++;
+      }
+      x = getSetOfRolls(19, 29, characteristics2d6Plus17);
+      for(int i = 0; i < x.length; i++) {
+         characteristics[j] = x[i];
+         j++;
+      }
 
       return characteristics;
    }
