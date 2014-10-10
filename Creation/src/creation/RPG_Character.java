@@ -21,8 +21,7 @@ public class RPG_Character {
    private int EDU;
    private int AGE;
    private String name;
-   private Dice DB;
-   private boolean negativeDB;
+   private DamageBonus db;
    private int maxHP;
    private int majorWoundLevel;
    private int xpBonus;
@@ -100,20 +99,6 @@ public class RPG_Character {
     */
    public String getName() {
       return name;
-   }
-
-   /**
-    * @return the DB
-    */
-   public Dice getDB() {
-      return DB;
-   }
-
-   /**
-    * @return the negativeDB
-    */
-   public boolean isNegativeDB() {
-      return negativeDB;
    }
 
    /**
@@ -241,20 +226,7 @@ public class RPG_Character {
    public void setName(String name) {
       this.name = name;
    }
-
-   /**
-    * @param DB the DB to set
-    */
-   public void setDB(Dice DB) {
-      this.DB = DB;
-   }
-
-   /**
-    * @param negativeDB the negativeDB to set
-    */
-   public void setNegativeDB(boolean negativeDB) {
-      this.negativeDB = negativeDB;
-   }
+   
 
    /**
     * @param maxHP the maxHP to set
@@ -317,7 +289,7 @@ public class RPG_Character {
    }
    
    public RPG_Character(int STR, int CON, int POW, int DEX, int CHA, int INT, 
-           int SIZ, int EDU, int AGE, String name, Dice DB, boolean negativeDB, 
+           int SIZ, int EDU, int AGE, String name, DamageBonus DB, 
            int maxHP, int majorWoundLevel, int xpBonus, int MOV, int SAN, 
            ArrayList<String> possessions, ArrayList<Skill> skills) {
       this.STR = STR;
@@ -330,8 +302,7 @@ public class RPG_Character {
       this.EDU = EDU;
       this.AGE = AGE;
       this.name = name;
-      this.DB = DB;
-      this.negativeDB = negativeDB;
+      this.db = DB;
       this.maxHP = maxHP;
       this.majorWoundLevel = majorWoundLevel;
       this.xpBonus = xpBonus;
@@ -341,8 +312,8 @@ public class RPG_Character {
       this.skills = skills;
    }
    
-   public RPG_Character(int[] characteristsics, String name, Dice DB,
-           boolean negativeDB, int[] derivedCharacteristics, 
+   public RPG_Character(int[] characteristsics, String name, DamageBonus DB,
+           int[] derivedCharacteristics, 
            ArrayList<String> possessions, ArrayList<Skill> skills) {
       this.STR = characteristsics[0];
       this.CON = characteristsics[1];
@@ -354,8 +325,7 @@ public class RPG_Character {
       this.EDU = characteristsics[7];
       this.AGE = characteristsics[8];
       this.name = name;
-      this.DB = DB;
-      this.negativeDB = negativeDB;
+      this.db = DB;
       this.maxHP = derivedCharacteristics[0];
       this.majorWoundLevel = derivedCharacteristics[1];
       this.xpBonus = derivedCharacteristics[2];
@@ -363,5 +333,19 @@ public class RPG_Character {
       this.SAN = derivedCharacteristics[4];
       this.possessions = possessions;
       this.skills = skills;
+   }
+
+   /**
+    * @return the db
+    */
+   public DamageBonus getDb() {
+      return db;
+   }
+
+   /**
+    * @param db the db to set
+    */
+   public void setDb(DamageBonus db) {
+      this.db = db;
    }
 }
