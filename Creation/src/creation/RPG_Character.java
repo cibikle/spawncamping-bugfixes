@@ -27,8 +27,8 @@ public class RPG_Character {
    private int xpBonus;
    private int MOV;
    private int SAN;
-   private ArrayList<CharacteristicSkill> characteristicSkills =
-           new ArrayList<CharacteristicSkill>();
+   private CharacteristicSkill[] characteristicSkills =
+           new CharacteristicSkill[8];
    private ArrayList<String> possessions = new ArrayList<String>();
    private ArrayList<Skill> skills = new ArrayList<Skill>();
    
@@ -39,7 +39,7 @@ public class RPG_Character {
    public RPG_Character(int STR, int CON, int POW, int DEX, int CHA, int INT, 
            int SIZ, int EDU, int AGE, String name, DamageBonus DB, 
            int maxHP, int majorWoundLevel, int xpBonus, int MOV, int SAN, 
-           ArrayList<CharacteristicSkill> characteristicSkills,
+           CharacteristicSkill[] characteristicSkills,
            ArrayList<String> possessions, ArrayList<Skill> skills) {
       this.STR = STR;
       this.CON = CON;
@@ -64,7 +64,7 @@ public class RPG_Character {
    
    public RPG_Character(int[] characteristsics, String name, DamageBonus DB,
            int[] derivedCharacteristics, 
-           ArrayList<CharacteristicSkill> characteristicSkills,
+           CharacteristicSkill[] characteristicSkills,
            ArrayList<String> possessions, ArrayList<Skill> skills) {
       this.STR = characteristsics[0];
       this.CON = characteristsics[1];
@@ -195,7 +195,7 @@ public class RPG_Character {
    /**
     * @return the characteristicSkills
     */
-   public ArrayList<CharacteristicSkill> getCharacteristicSkills() {
+   public CharacteristicSkill[] getCharacteristicSkills() {
       return characteristicSkills;
    }
 
@@ -329,7 +329,7 @@ public class RPG_Character {
    /**
     * @param characteristicSkills the characteristicSkills to set
     */
-   public void setCharacteristicSkills(ArrayList<CharacteristicSkill>
+   public void setCharacteristicSkills(CharacteristicSkill[]
            characteristicSkills) {
       this.characteristicSkills = characteristicSkills;
    }
