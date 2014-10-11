@@ -7,6 +7,7 @@ package creation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -219,6 +220,28 @@ public class CharacterCreationAssistant {
       new Skill("Missile Weapon (Throwing Axe)", 00, false),
       new Skill("Missile Weapon (Throwing Knife)", 00, false),
       new Skill("Throw", 25, false),};
+      private static final String add20 = "Add 20 Skill points to each of the following skills:\n\t";
+      private static String[] personalityDescs = {
+         "1. Bruiser: Your character believes that solving problems is best handled through quick application of physical force.\n"
+              + add20
+              + "Brawl, Climb, Combat (any two), Dodge, Grapple, Insight, Jump, Ride, Sense, Stealth, Swim, and Throw.\n",
+         "2. Master: Your character believes that technique, craft, and expertise are the keys to success.\n"
+              + add20
+              + "Appraise, Combat (any), Craft, Disguise, Dodge, Fine Manipulation, First Aid, Knowledge (any), Navigate, Pilot, Ride, Sleight of Hand, and Stealth",
+         "3. Thinker: When confronted with opposition, your character's first instinct is to outsmart their opponent to gain as advantage.\n"
+              + add20
+              + "Appraise, Bargain, Combat (any), Disguise, Insight, Knowledge (any two), Listen Research, Sense, Spot, Stealth, and any one Technical skill.",
+         "4. Leader: Your character enjoys calling the shots and persuading other to work.\n"
+              + add20
+              + "Appraise, Bargain, Combat (any), Command, Etiquette, Fast Talk, Insight, Knowledge (any), Language (any), Language (Own), Perform, Persuade, and Sense.",
+         "5. Slacker: Your character has spent their lifetime dodging responsibility and believe that problems are best avoided altogether.\n"
+              + add20
+              + "Bargain, Bureaucracy, Disguise, Dodge, Fast Talk, Gaming, Hide, Insight, Language (any), Persuade, Sense, Slight of Hand, and Spot",
+         "6. Nutter: Your character can safely be categorized as insane, though they are functional and able to work within the organization of the Laundry. Rational thought and problem-solving methods are neglected: insane leaps of logic are the primary means of attaining goals.\n"
+              + add20
+              + "Command, Fast Talk, Hide, Insight, Knowledge (any two), Research, Science (any two), Sense, Spot, Stealth, Strategy.\n"
+              + "Further, reduce SAN by 20 and choose an appropriate mental disorder."
+      };
 
    /**
     * @param args the command line arguments
@@ -350,7 +373,10 @@ public class CharacterCreationAssistant {
       println(Arrays.toString(derivedCharacteristics));
       println(db.toString());
       println(Arrays.toString(characteristicSkills));
-
+      
+      ArrayList<Skill> skills = new ArrayList<Skill>(Arrays.asList(baseSkillSet));
+      ArrayList<Skill> combatSkills = new ArrayList<Skill>(Arrays.asList(baseCombatSkills));
+      println(skills.toString().replaceAll(",", "\n"));
    }
 
    private static int[] getCharacteristicScoresFromUser() throws IOException {
@@ -490,6 +516,14 @@ public class CharacterCreationAssistant {
       }
    }
 
+   private static void pickPersonalityType(ArrayList<Skill> skills, ArrayList<Skill> combatSkills) {
+      println("How does your character approach life and deal with challenges?\n"
+              + "Choose one of the following options by entering its number or leave it to (c)hance.\n"
+              );
+      //print the types and then get input and then figure out how to apply their choices--how do we handle choosing skills?
+      
+   }
+   
    private static void print(String s) {
       System.out.print(s);
    }
