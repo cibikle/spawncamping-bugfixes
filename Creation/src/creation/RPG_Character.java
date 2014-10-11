@@ -27,9 +27,65 @@ public class RPG_Character {
    private int xpBonus;
    private int MOV;
    private int SAN;
-   private ArrayList<CharacteristicSkill> characteristicSkills = new ArrayList<CharacteristicSkill>();
+   private ArrayList<CharacteristicSkill> characteristicSkills =
+           new ArrayList<CharacteristicSkill>();
    private ArrayList<String> possessions = new ArrayList<String>();
    private ArrayList<Skill> skills = new ArrayList<Skill>();
+   
+   public RPG_Character() {
+      
+   }
+   
+   public RPG_Character(int STR, int CON, int POW, int DEX, int CHA, int INT, 
+           int SIZ, int EDU, int AGE, String name, DamageBonus DB, 
+           int maxHP, int majorWoundLevel, int xpBonus, int MOV, int SAN, 
+           ArrayList<CharacteristicSkill> characteristicSkills,
+           ArrayList<String> possessions, ArrayList<Skill> skills) {
+      this.STR = STR;
+      this.CON = CON;
+      this.POW = POW;
+      this.DEX = DEX;
+      this.CHA = CHA;
+      this.INT = INT;
+      this.SIZ = SIZ;
+      this.EDU = EDU;
+      this.AGE = AGE;
+      this.name = name;
+      this.db = DB;
+      this.maxHP = maxHP;
+      this.majorWoundLevel = majorWoundLevel;
+      this.xpBonus = xpBonus;
+      this.MOV = MOV;
+      this.SAN = SAN;
+      this.characteristicSkills = characteristicSkills;
+      this.possessions = possessions;
+      this.skills = skills;
+   }
+   
+   public RPG_Character(int[] characteristsics, String name, DamageBonus DB,
+           int[] derivedCharacteristics, 
+           ArrayList<CharacteristicSkill> characteristicSkills,
+           ArrayList<String> possessions, ArrayList<Skill> skills) {
+      this.STR = characteristsics[0];
+      this.CON = characteristsics[1];
+      this.POW = characteristsics[2];
+      this.DEX = characteristsics[3];
+      this.CHA = characteristsics[4];
+      this.INT = characteristsics[5];
+      this.SIZ = characteristsics[6];
+      this.EDU = characteristsics[7];
+      this.AGE = characteristsics[8];
+      this.name = name;
+      this.db = DB;
+      this.maxHP = derivedCharacteristics[0];
+      this.majorWoundLevel = derivedCharacteristics[1];
+      this.xpBonus = derivedCharacteristics[2];
+      this.MOV = derivedCharacteristics[3];
+      this.SAN = derivedCharacteristics[4];
+      this.characteristicSkills = characteristicSkills;
+      this.possessions = possessions;
+      this.skills = skills;
+   }
 
    /**
     * @return the STR
@@ -158,6 +214,13 @@ public class RPG_Character {
    }
 
    /**
+    * @return the db
+    */
+   public DamageBonus getDb() {
+      return db;
+   }
+
+   /**
     * @param STR the STR to set
     */
    public void setSTR(int STR) {
@@ -266,7 +329,8 @@ public class RPG_Character {
    /**
     * @param characteristicSkills the characteristicSkills to set
     */
-   public void setCharacteristicSkills(ArrayList<CharacteristicSkill> characteristicSkills) {
+   public void setCharacteristicSkills(ArrayList<CharacteristicSkill>
+           characteristicSkills) {
       this.characteristicSkills = characteristicSkills;
    }
 
@@ -282,64 +346,6 @@ public class RPG_Character {
     */
    public void setSkills(ArrayList<Skill> skills) {
       this.skills = skills;
-   }
-   
-   public RPG_Character() {
-      
-   }
-   
-   public RPG_Character(int STR, int CON, int POW, int DEX, int CHA, int INT, 
-           int SIZ, int EDU, int AGE, String name, DamageBonus DB, 
-           int maxHP, int majorWoundLevel, int xpBonus, int MOV, int SAN, 
-           ArrayList<String> possessions, ArrayList<Skill> skills) {
-      this.STR = STR;
-      this.CON = CON;
-      this.POW = POW;
-      this.DEX = DEX;
-      this.CHA = CHA;
-      this.INT = INT;
-      this.SIZ = SIZ;
-      this.EDU = EDU;
-      this.AGE = AGE;
-      this.name = name;
-      this.db = DB;
-      this.maxHP = maxHP;
-      this.majorWoundLevel = majorWoundLevel;
-      this.xpBonus = xpBonus;
-      this.MOV = MOV;
-      this.SAN = SAN;
-      this.possessions = possessions;
-      this.skills = skills;
-   }
-   
-   public RPG_Character(int[] characteristsics, String name, DamageBonus DB,
-           int[] derivedCharacteristics, 
-           ArrayList<String> possessions, ArrayList<Skill> skills) {
-      this.STR = characteristsics[0];
-      this.CON = characteristsics[1];
-      this.POW = characteristsics[2];
-      this.DEX = characteristsics[3];
-      this.CHA = characteristsics[4];
-      this.INT = characteristsics[5];
-      this.SIZ = characteristsics[6];
-      this.EDU = characteristsics[7];
-      this.AGE = characteristsics[8];
-      this.name = name;
-      this.db = DB;
-      this.maxHP = derivedCharacteristics[0];
-      this.majorWoundLevel = derivedCharacteristics[1];
-      this.xpBonus = derivedCharacteristics[2];
-      this.MOV = derivedCharacteristics[3];
-      this.SAN = derivedCharacteristics[4];
-      this.possessions = possessions;
-      this.skills = skills;
-   }
-
-   /**
-    * @return the db
-    */
-   public DamageBonus getDb() {
-      return db;
    }
 
    /**
