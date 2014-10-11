@@ -22,6 +22,8 @@ public class CharacterCreationAssistant {
    private static String[] characteristics2d6Plus6 = {"2d6+6", "INT", "SIZ"};
    private static String[] characteristics3d6Plus3 = {"3d6+3", "EDU"};
    private static String[] characteristics2d6Plus17 = {"2d6+17", "AGE"};
+   private static String[] characteristicSkillNames = {"Effort", "Endurance",
+      "Luck", "Agility", "Charisma", "Idea", "N/A", "Know"};
 
    /**
     * @param args the command line arguments
@@ -125,6 +127,9 @@ public class CharacterCreationAssistant {
 
    private static void newCharacter() throws IOException {
       int[] characteristics = {1};
+      int[] derivedCharacteristics = {2};
+      DamageBonus db;
+      CharacteristicSkill[] characteristicSkills;
       println("Right now, only PC creation is supported, but you could probably make NPC creation work. Just FYI.");
       char[] acceptedResponses = {'y', 'n', 'a', 'q'};
       char c = getValidResponseFromUser("Autoroll for characteristics?\n(Y)es, roll for me/(N)o, I want to enter my own.", acceptedResponses);
@@ -143,7 +148,13 @@ public class CharacterCreationAssistant {
             return;
       }
 
+      derivedCharacteristics = deriveDerivedCharacteristics(characteristics);
+      db = calculateDamageBonus(characteristics[0], characteristics[6]);
+      characteristicSkills = deriveCharacteristicSkills(characteristics);
       println(Arrays.toString(characteristics));
+      println(Arrays.toString(derivedCharacteristics));
+      println(db.toString());
+      println(Arrays.toString(characteristicSkills));
 
    }
 
@@ -151,22 +162,22 @@ public class CharacterCreationAssistant {
       int[] characteristics = new int[characteristics3d6.length - 1 + characteristics2d6Plus6.length - 1 + characteristics3d6Plus3.length - 1 + characteristics2d6Plus17.length - 1];
       int j = 0;
       int[] x = getSetOfRolls(3, 18, characteristics3d6);
-      for(int i = 0; i < x.length; i++) {
+      for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
       }
       x = getSetOfRolls(8, 18, characteristics2d6Plus6);
-      for(int i = 0; i < x.length; i++) {
+      for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
       }
       x = getSetOfRolls(6, 21, characteristics3d6Plus3);
-      for(int i = 0; i < x.length; i++) {
+      for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
       }
       x = getSetOfRolls(19, 29, characteristics2d6Plus17);
-      for(int i = 0; i < x.length; i++) {
+      for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
       }
@@ -222,8 +233,8 @@ public class CharacterCreationAssistant {
       Dice threeD6 = new Dice(3, 6);
       Dice twoD6 = new Dice(2, 6);
       String msg = "(K)eep or (R)eroll?";
-      char[] acceptedResponses = {'k','r','a','q'};
-      
+      char[] acceptedResponses = {'k', 'r', 'a', 'q'};
+
       do {
          j = 0;
          for (int i = 0; i < characteristics3d6.length - 1; i++) {
@@ -244,8 +255,44 @@ public class CharacterCreationAssistant {
          }
          println(Arrays.toString(characteristics));
       } while (Character.toLowerCase(getValidResponseFromUser(msg, acceptedResponses)) == 'r');
-      
+
       return characteristics;
+   }
+
+   private static int[] deriveDerivedCharacteristics(int[] characteristics) {
+      //hp, mwl, xpbonus, mov, san
+      int[] derivedCharacteristics = new int[5];
+      derivedCharacteristics[0] = (int) (((characteristics[1] + characteristics[6]) / 2.0) + 0.5);
+      derivedCharacteristics[1] = (int) ((derivedCharacteristics[0] / 2.0) + 0.5);
+      derivedCharacteristics[2] = (int) ((characteristics[5] / 2.0) + 0.5);
+      derivedCharacteristics[3] = 10;
+      derivedCharacteristics[4] = (int) (characteristics[2] * 5);
+      return derivedCharacteristics;
+   }
+
+   private static CharacteristicSkill[] deriveCharacteristicSkills(int[] characteristics) {
+      CharacteristicSkill[] characteristicSkills = new CharacteristicSkill[characteristics.length - 1];
+      for (int i = 0; i < characteristicSkills.length; i++) {
+         characteristicSkills[i] = new CharacteristicSkill(characteristicSkillNames[i], characteristics[i] * 5);
+      }
+      return characteristicSkills;
+   }
+
+   private static DamageBonus calculateDamageBonus(int str, int siz) {
+      int basis = str + siz;
+      if (basis < 13) {
+         return new DamageBonus(new Dice(1, 6), true);
+      } else if (basis < 17) {
+         return new DamageBonus(new Dice(1, 4), true);
+      } else if (basis < 25) {
+         return new DamageBonus(new Dice(0, 4), false);
+      } else if (basis < 33) {
+         return new DamageBonus(new Dice(1, 4), false);
+      } else if (basis < 41) {
+         return new DamageBonus(new Dice(1, 6), false);
+      } else {
+         return new DamageBonus(new Dice(2, 6), false);
+      }
    }
 
    private static void print(String s) {
