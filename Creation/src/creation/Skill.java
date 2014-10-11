@@ -47,6 +47,10 @@ public class Skill {
       skillLevel += (addend);
    }
    
+   public String toString() {
+      return name+": "+skillLevel;
+   }
+   
 /*   public int resolveCheck(int addend) {
       updateSkillLevelByValue(addend);
       clearChecked();
