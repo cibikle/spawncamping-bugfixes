@@ -27,12 +27,65 @@ public class CharacterCreationAssistant {
       "Luck", "Agility", "Charisma", "Idea", "N/A", "Know"};
    private static Skill[] baseSkillSet = {
       new CheckableSkill("Appraise", 15, false),
+      new Skill("Art",05),
+      new Skill("Athletics",10),
+      new CheckableSkill("Bargain", 05, false),
+      new CheckableSkill("Bureaucracy", 05, false),
+      new CheckableSkill("Climb", 40, false),
+      new CheckableSkill("Command", 05, false),
+      new Skill("Computer Use", 05),
+      new Skill("Craft",05),
+      new Skill("Cthulhu Mythos", 0),
+      new CheckableSkill("Demolition", 0, false),
+      new CheckableSkill("Disguise", 05, false),
+      new Skill("Drive",20),
+      new CheckableSkill("Etiquette", 05, false),
+      new CheckableSkill("Fast Talk", 05, false),
+      new CheckableSkill("Fine Manipulation", 05, false),
+      new CheckableSkill("First Aid", 30, false),
+      new CheckableSkill("Gaming", 10, false),
+      new CheckableSkill("Grapple", 25, false),
+      new Skill("Heavy Machine",05),
+      new CheckableSkill("Hide", 10, false),
+      new CheckableSkill("Insight", 05, false),
+      new CheckableSkill("Jump", 25, false),
+      new CheckableSkill("Knowledge (Accounting)", 10, false),  
+      new CheckableSkill("Knowledge (Espionage)", 00, false),
+      new CheckableSkill("Knowledge (Law)", 05, false),
+      new CheckableSkill("Knowledge (Occult)", 05, false),
+      new CheckableSkill("Knowledge (Politics)", 05, false),
+      new CheckableSkill("Language (Own: INTx5%)", 40, false),
+      new CheckableSkill("Listen", 25, false),
+      new Skill("Medicine",05),
+      new CheckableSkill("Navigate", 10, false),
+      new Skill("Perform",05),
+      new CheckableSkill("Persuade", 15, false),
+      new Skill("Pilot",00),
+      new CheckableSkill("Psychotherapy", 00, false),
+      new Skill("Repair",15),
+      new CheckableSkill("Research", 25, false),
+      new CheckableSkill("Ride", 05, false),
+      new Skill("Science (see p42)",00),
+      new CheckableSkill("Sense", 10, false),
+      new CheckableSkill("Slight of Hand", 05, false),
+      new Skill("Sorcery", 00),
+      new CheckableSkill("Spot", 25, false),
+      new Skill("Status", 15),
+      new CheckableSkill("Stealth", 10, false),
+      new CheckableSkill("Swim", 25, false),
+      new CheckableSkill("Teach", 10, false),
+      new Skill("Technology Use",05),
+      new CheckableSkill("Track", 10, false)
+   };
+   private static Skill[] artSpecializations = {
       new CheckableSkill("Art (Calligraphy)", 05, false),
       new CheckableSkill("Art (Drawing)", 05, false),
       new CheckableSkill("Art (Painting)", 05, false),
       new CheckableSkill("Art (Photograpy)", 05, false),
       new CheckableSkill("Art (Sculpture)", 05, false),
-      new CheckableSkill("Art (Writing)", 05, false),
+      new CheckableSkill("Art (Writing)", 05, false)
+   };
+   private static Skill[] athleticsSpecializations = {
       new CheckableSkill("Athletics (Acrobatics)", 10, false),
       new CheckableSkill("Athletics (American Football)", 10, false),
       new CheckableSkill("Athletics (Association Footcall)", 10, false),
@@ -47,11 +100,9 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Athletics (Skating)", 10, false),
       new CheckableSkill("Athletics (Skiing)", 10, false),
       new CheckableSkill("Athletics (Tennis)", 10, false),
-      new CheckableSkill("Athletics (Track & Field)", 10, false),
-      new CheckableSkill("Bargain", 05, false),
-      new CheckableSkill("Bureaucracy", 05, false),
-      new CheckableSkill("Climb", 40, false),
-      new CheckableSkill("Command", 05, false),
+      new CheckableSkill("Athletics (Track & Field)", 10, false)
+   };
+   private static Skill[] computerUseSpecializations = {
       new CheckableSkill("Computer Use (Art)", 05, false),
       new CheckableSkill("Computer Use (Design)", 05, false),
       new CheckableSkill("Computer Use (Forensics)", 05, false),
@@ -60,57 +111,54 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Computer Use (Hacking)", 05, false),
       new CheckableSkill("Computer Use (Maintenance)", 05, false),
       new CheckableSkill("Computer Use (Programming)", 05, false),
-      new CheckableSkill("Computer Use (Repair)", 05, false),
+      new CheckableSkill("Computer Use (Repair)", 05, false)
+   };
+   private static Skill[] craftSpecializations = {
       new CheckableSkill("Craft (Carpentry)", 05, false),
       new CheckableSkill("Craft (Cooking)", 05, false),
       new CheckableSkill("Craft (Letherworking)", 05, false),
       new CheckableSkill("Craft (Pottery)", 05, false),
       new CheckableSkill("Craft (Sewing)", 05, false),
-      new CheckableSkill("Craft (Woodworking)", 05, false),
-      new Skill("Cthulhu Mythos", 0),
-      new CheckableSkill("Demolition", 0, false),
-      new CheckableSkill("Disguise", 05, false),
+      new CheckableSkill("Craft (Woodworking)", 05, false)
+   };
+   private static Skill[] driveSpecializations = {
       new CheckableSkill("Drive (Automobile)", 20, false),
       new CheckableSkill("Drive (Industrial Mover)", 20, false),
       new CheckableSkill("Drive (Motorcycle)", 20, false),
-      new CheckableSkill("Drive (Tank)", 20, false),
-      new CheckableSkill("Etiquette", 05, false),
-      new CheckableSkill("Fast Talk", 05, false),
-      new CheckableSkill("Fine Manipulation", 05, false),
-      new CheckableSkill("First Aid", 30, false),
-      new CheckableSkill("Gaming", 10, false),
-      new CheckableSkill("Grapple", 25, false),
+      new CheckableSkill("Drive (Tank)", 20, false)
+   };
+   private static Skill[] heavyMachineSpecializations = {
       new CheckableSkill("Heavy Machine (Boiler)", 05, false),
       new CheckableSkill("Heavy Machine (Bulldozer)", 05, false),
       new CheckableSkill("Heavy Machine (Crane)", 05, false),
       new CheckableSkill("Heavy Machine (Engine)", 05, false),
       new CheckableSkill("Heavy Machine (Turbine)", 05, false),
-      new CheckableSkill("Heavy Machine (Wrecker)", 05, false),
-      new CheckableSkill("Hide", 10, false),
-      new CheckableSkill("Insight", 05, false),
-      new CheckableSkill("Jump", 25, false),
-      new CheckableSkill("Knowledge (Accounting)", 10, false),
+      new CheckableSkill("Heavy Machine (Wrecker)", 05, false)
+   };
+   private static Skill[] knowledgeSpecializations = {
       new CheckableSkill("Knowledge (Anthropology)", 01, false),
       new CheckableSkill("Knowledge (Archaeology)", 01, false),
       new CheckableSkill("Knowledge (Art History)", 01, false),
       new CheckableSkill("Knowledge (Business)", 01, false),
-      new CheckableSkill("Knowledge (Espionage)", 00, false),
       new CheckableSkill("Knowledge (Folklore)", 05, false),
       new CheckableSkill("Knowledge (Group)", 00, false),
       new CheckableSkill("Knowledge (History)", 20, false),
-      new CheckableSkill("Knowledge (Law)", 05, false),
       new CheckableSkill("Knowledge (Linguistics)", 00, false),
       new CheckableSkill("Knowledge (Literature)", 05, false),
       new CheckableSkill("Knowledge (Natural History)", 10, false),
-      new CheckableSkill("Knowledge (Occult)", 05, false),
       new CheckableSkill("Knowledge (Philosophy)", 01, false),
-      new CheckableSkill("Knowledge (Politics)", 05, false),
       new CheckableSkill("Knowledge (Region)", 00, false),
       new CheckableSkill("Knowledge (Religion)", 05, false),
       new CheckableSkill("Knowledge (Streetwise)", 05, false),
-      new CheckableSkill("Language (Own)", 40, false),
-      new CheckableSkill("Language (Other)", 0, false),
-      new CheckableSkill("Listen", 25, false),
+   };
+   private static Skill[] languageSpecializations = {
+      new CheckableSkill("Language (Arabic)", 0, false),
+      new CheckableSkill("Language (Enochian)", 0, false),
+      new CheckableSkill("Language (Old Enochian)", 0, false),
+      new CheckableSkill("Language (German)", 0, false),
+      new CheckableSkill("Language (Latin)", 0, false),
+   };
+   private static Skill[] medicineSpecializations = {
       new CheckableSkill("Medicine (Dermatology)", 05, false),
       new CheckableSkill("Medicine (Family Medicine)", 05, false),
       new CheckableSkill("Medicine (Immunology)", 05, false),
@@ -121,15 +169,17 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Medicine (Pathology)", 05, false),
       new CheckableSkill("Medicine (Pediatrics)", 05, false),
       new CheckableSkill("Medicine (Radiology)", 05, false),
-      new CheckableSkill("Medicine (Surgery)", 05, false),
-      new CheckableSkill("Navigate", 10, false),
+      new CheckableSkill("Medicine (Surgery)", 05, false)
+   };
+   private static Skill[] performSpecializations = {
       new CheckableSkill("Perform (Act)", 05, false),
       new CheckableSkill("Perform (Dance)", 05, false),
       new CheckableSkill("Perform (Juggle)", 05, false),
       new CheckableSkill("Perform (Play Instrument)", 05, false),
       new CheckableSkill("Perform (Recite)", 05, false),
-      new CheckableSkill("Perform (Sing)", 05, false),
-      new CheckableSkill("Persuade", 15, false),
+      new CheckableSkill("Perform (Sing)", 05, false)
+   };
+   private static Skill[] pilotSpecializations = {
       new CheckableSkill("Pilot (Battleship)", 00, false),
       new CheckableSkill("Pilot (Helicopter)", 00, false),
       new CheckableSkill("Pilot (Hot Air Balloon)", 00, false),
@@ -138,16 +188,17 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Pilot (Jet Boat)", 00, false),
       new CheckableSkill("Pilot (Jet Fighter)", 00, false),
       new CheckableSkill("Pilot (Ocean Liner)", 00, false),
-      new CheckableSkill("Pilot (Propeller Plane)", 00, false),
-      new CheckableSkill("Psychotherapy", 00, false),
+      new CheckableSkill("Pilot (Propeller Plane)", 00, false)
+   };
+   private static Skill[] repairSpecializations = {
       new CheckableSkill("Repair (Electrical)", 15, false),
       new CheckableSkill("Repair (Electronic)", 15, false),
       new CheckableSkill("Repair (Hydraulic)", 15, false),
       new CheckableSkill("Repair (Mechanical)", 15, false),
       new CheckableSkill("Repair (Plumbing)", 15, false),
-      new CheckableSkill("Repair (Structural)", 15, false),
-      new CheckableSkill("Research", 25, false),
-      new CheckableSkill("Ride", 05, false),
+      new CheckableSkill("Repair (Structural)", 15, false)
+   };
+   private static Skill[] scienceSpecializations = {
       new CheckableSkill("Science (Astronomy)", 01, false),
       new CheckableSkill("Science (Biology)", 01, false),
       new CheckableSkill("Science (Botany)", 01, false),
@@ -163,28 +214,18 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Science (Planetology)", 01, false),
       new CheckableSkill("Science (Psychology)", 05, false),
       new CheckableSkill("Science (Thaumaturgy)", 00, false),
-      new CheckableSkill("Science (Zoology)", 05, false),
-      new CheckableSkill("Sense", 10, false),
-      new CheckableSkill("Slight of Hand", 05, false),
-      new Skill("Sorcery", 00),
-      new CheckableSkill("Spot", 25, false),
-      new Skill("Status", 15),
-      new CheckableSkill("Stealth", 10, false),
-      new CheckableSkill("Swim", 25, false),
-      new CheckableSkill("Teach", 10, false),
+      new CheckableSkill("Science (Zoology)", 05, false)
+   };
+   private static Skill[] technologyUseSpecializations = {
       new CheckableSkill("Technology Use (Communications)", 05, false),
       new CheckableSkill("Technology Use (Electronic Security)", 05, false),
       new CheckableSkill("Technology Use (Electronics)", 05, false),
       new CheckableSkill("Technology Use (Sensor System)", 05, false),
       new CheckableSkill("Technology Use (Surveillance)", 05, false),
-      new CheckableSkill("Technology Use (Traps)", 05, false),
-      new CheckableSkill("Track", 10, false)
+      new CheckableSkill("Technology Use (Traps)", 05, false)
    };
    private static Skill[] baseCombatSkills = {
-      new CheckableSkill("Artillery (Cannon)", 0, false),
-      new CheckableSkill("Artillery (Rocket Launcher)", 0, false),
-      new CheckableSkill("Artillery (Turret)", 0, false),
-      new CheckableSkill("Artillery (Vehicular Weapon)", 0, false),
+      new Skill("Artillery (various)", 00),
       new CheckableSkill("Brawl", 25, false),
       new CheckableSkill("Dodge", 06, false),
       new CheckableSkill("Firearm (Assault Rifle)", 15, false),
@@ -194,11 +235,25 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Firearm (Rifle)", 25, false),
       new CheckableSkill("Firearm (Shotgun)", 30, false),
       new CheckableSkill("Firearm (SMG)", 15, false),
+      new Skill("Heavy Weapon (various)", 00),
+      new Skill("Melee Weapon (various)", 00),
+      new Skill("Missile Weapon (various)", 00),
+      new CheckableSkill("Throw", 25, false)
+   };
+   private static Skill[] artillerySpecializations = {
+      new CheckableSkill("Artillery (Cannon)", 0, false),
+      new CheckableSkill("Artillery (Rocket Launcher)", 0, false),
+      new CheckableSkill("Artillery (Turret)", 0, false),
+      new CheckableSkill("Artillery (Vehicular Weapon)", 0, false)
+   };
+   private static Skill[] heavyWeaponSpecializations = {
       new CheckableSkill("Heavy Weapon (Bazooka)", 0, false),
       new CheckableSkill("Heavy Weapon (Grenade Launcher)", 0, false),
       new CheckableSkill("Heavy Weapon (Heavy Machine Gun)", 0, false),
       new CheckableSkill("Heavy Weapon (Minigun)", 0, false),
-      new CheckableSkill("Heavy Weapon (Rocket Launcher)", 0, false),
+      new CheckableSkill("Heavy Weapon (Rocket Launcher)", 0, false)
+   };
+   private static Skill[] meleeWeaponSpecializations = {
       new CheckableSkill("Melee Weapon (Axe)", 00, false),
       new CheckableSkill("Melee Weapon (Club)", 00, false),
       new CheckableSkill("Melee Weapon (Garrote)", 00, false),
@@ -206,7 +261,9 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Melee Weapon (Spear)", 00, false),
       new CheckableSkill("Melee Weapon (Staff)", 00, false),
       new CheckableSkill("Melee Weapon (Sword)", 00, false),
-      new CheckableSkill("Melee Weapon (Whip)", 00, false),
+      new CheckableSkill("Melee Weapon (Whip)", 00, false)
+   };
+   private static Skill[] missileWeaponSpecializations = {
       new CheckableSkill("Missile Weapon (Archery)", 00, false),
       new CheckableSkill("Missile Weapon (Blowgun)", 00, false),
       new CheckableSkill("Missile Weapon (Boomerang)", 00, false),
@@ -218,30 +275,30 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Missile Weapon (Sling)", 00, false),
       new CheckableSkill("Missile Weapon (Spear)", 00, false),
       new CheckableSkill("Missile Weapon (Throwing Axe)", 00, false),
-      new CheckableSkill("Missile Weapon (Throwing Knife)", 00, false),
-      new CheckableSkill("Throw", 25, false),};
-      private static final String add20 = "Add 20 Skill points to each of the following skills:\n\t";
-      private static String[] personalityDescs = {
-         "1. Bruiser: Your character believes that solving problems is best handled through quick application of physical force.\n"
-              + add20
-              + "Brawl, Climb, Combat (any two), Dodge, Grapple, Insight, Jump, Ride, Sense, Stealth, Swim, and Throw.\n",
-         "2. Master: Your character believes that technique, craft, and expertise are the keys to success.\n"
-              + add20
-              + "Appraise, Combat (any), Craft, Disguise, Dodge, Fine Manipulation, First Aid, Knowledge (any), Navigate, Pilot, Ride, Sleight of Hand, and Stealth",
-         "3. Thinker: When confronted with opposition, your character's first instinct is to outsmart their opponent to gain as advantage.\n"
-              + add20
-              + "Appraise, Bargain, Combat (any), Disguise, Insight, Knowledge (any two), Listen Research, Sense, Spot, Stealth, and any one Technical skill.",
-         "4. Leader: Your character enjoys calling the shots and persuading other to work.\n"
-              + add20
-              + "Appraise, Bargain, Combat (any), Command, Etiquette, Fast Talk, Insight, Knowledge (any), Language (any), Language (Own), Perform, Persuade, and Sense.",
-         "5. Slacker: Your character has spent their lifetime dodging responsibility and believe that problems are best avoided altogether.\n"
-              + add20
-              + "Bargain, Bureaucracy, Disguise, Dodge, Fast Talk, Gaming, Hide, Insight, Language (any), Persuade, Sense, Slight of Hand, and Spot",
-         "6. Nutter: Your character can safely be categorized as insane, though they are functional and able to work within the organization of the Laundry. Rational thought and problem-solving methods are neglected: insane leaps of logic are the primary means of attaining goals.\n"
-              + add20
-              + "Command, Fast Talk, Hide, Insight, Knowledge (any two), Research, Science (any two), Sense, Spot, Stealth, Strategy.\n"
-              + "Further, reduce SAN by 20 and choose an appropriate mental disorder."
-      };
+      new CheckableSkill("Missile Weapon (Throwing Knife)", 00, false)
+   };
+   private static final String add20 = "Add 20 Skill points to each of the following skills:\n\t";
+   private static String[] personalityDescs = {
+      "1. Bruiser: Your character believes that solving problems is best handled through quick application of physical force.\n"
+      + add20
+      + "Brawl, Climb, Combat (any two), Dodge, Grapple, Insight, Jump, Ride, Sense, Stealth, Swim, and Throw.\n",
+      "2. Master: Your character believes that technique, craft, and expertise are the keys to success.\n"
+      + add20
+      + "Appraise, Combat (any), Craft, Disguise, Dodge, Fine Manipulation, First Aid, Knowledge (any), Navigate, Pilot, Ride, Sleight of Hand, and Stealth",
+      "3. Thinker: When confronted with opposition, your character's first instinct is to outsmart their opponent to gain as advantage.\n"
+      + add20
+      + "Appraise, Bargain, Combat (any), Disguise, Insight, Knowledge (any two), Listen Research, Sense, Spot, Stealth, and any one Technical skill.",
+      "4. Leader: Your character enjoys calling the shots and persuading other to work.\n"
+      + add20
+      + "Appraise, Bargain, Combat (any), Command, Etiquette, Fast Talk, Insight, Knowledge (any), Language (any), Language (Own), Perform, Persuade, and Sense.",
+      "5. Slacker: Your character has spent their lifetime dodging responsibility and believe that problems are best avoided altogether.\n"
+      + add20
+      + "Bargain, Bureaucracy, Disguise, Dodge, Fast Talk, Gaming, Hide, Insight, Language (any), Persuade, Sense, Slight of Hand, and Spot",
+      "6. Nutter: Your character can safely be categorized as insane, though they are functional and able to work within the organization of the Laundry. Rational thought and problem-solving methods are neglected: insane leaps of logic are the primary means of attaining goals.\n"
+      + add20
+      + "Command, Fast Talk, Hide, Insight, Knowledge (any two), Research, Science (any two), Sense, Spot, Stealth, Strategy.\n"
+      + "Further, reduce SAN by 20 and choose an appropriate mental disorder."
+   };
 
    /**
     * @param args the command line arguments
@@ -371,7 +428,7 @@ public class CharacterCreationAssistant {
       println(Arrays.toString(derivedCharacteristics));
       println(db.toString());
       println(Arrays.toString(characteristicSkills));
-      
+
       ArrayList<Skill> skills = new ArrayList<Skill>(Arrays.asList(baseSkillSet));
       ArrayList<Skill> combatSkills = new ArrayList<Skill>(Arrays.asList(baseCombatSkills));
       println(skills.toString().replaceAll(",", "\n"));
@@ -485,7 +542,7 @@ public class CharacterCreationAssistant {
       derivedCharacteristics[0] = (int) (((characteristics[1] + characteristics[6]) / 2.0) + 0.5);
       derivedCharacteristics[1] = (int) ((derivedCharacteristics[0] / 2.0) + 0.5);
       derivedCharacteristics[2] = (int) ((characteristics[5] / 2.0) + 0.5);
-      derivedCharacteristics[3] = 10;
+      derivedCharacteristics[3] = 10; //assumes human character; TODO: support for non-human characters?
       derivedCharacteristics[4] = (int) (characteristics[2] * 5);
       return derivedCharacteristics;
    }
@@ -516,15 +573,19 @@ public class CharacterCreationAssistant {
    }
 
    private static void pickPersonalityType(ArrayList<CheckableSkill> skills, ArrayList<CheckableSkill> combatSkills) {
-      println("How does your character approach life and deal with challenges?\n"
-              + "Choose one of the following options by entering its number or leave it to (c)hance.\n"
-              );
+      String prompt = "How does your character approach life and deal with challenges?\n"
+              + "Choose one of the following options by entering its number or leave it to (c)hance.\n";
+      println(prompt);
       //print the types and then get input and then figure out how to apply their choices--how do we handle choosing skills?
-      
+
    }
-   
+
    private static void print(String s) {
       System.out.print(s);
+   }
+
+   private static void println() {
+      System.out.println();
    }
 
    private static void println(String s) {
