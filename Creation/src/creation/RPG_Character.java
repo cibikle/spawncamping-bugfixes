@@ -31,6 +31,7 @@ public class RPG_Character {
            new CharacteristicSkill[8];
    private ArrayList<String> possessions = new ArrayList<String>();
    private ArrayList<Skill> skills = new ArrayList<Skill>();
+   private ArrayList<Skill> combatSkills = new ArrayList<Skill>();
    
    public RPG_Character() {
       
@@ -40,7 +41,8 @@ public class RPG_Character {
            int SIZ, int EDU, int AGE, String name, DamageBonus DB, 
            int maxHP, int majorWoundLevel, int xpBonus, int MOV, int SAN, 
            CharacteristicSkill[] characteristicSkills,
-           ArrayList<String> possessions, ArrayList<Skill> skills) {
+           ArrayList<String> possessions, ArrayList<Skill> skills, 
+           ArrayList<Skill> combatSkills) {
       this.STR = STR;
       this.CON = CON;
       this.POW = POW;
@@ -60,12 +62,14 @@ public class RPG_Character {
       this.characteristicSkills = characteristicSkills;
       this.possessions = possessions;
       this.skills = skills;
+      this.combatSkills = combatSkills;
    }
    
    public RPG_Character(int[] characteristsics, String name, DamageBonus DB,
            int[] derivedCharacteristics, 
            CharacteristicSkill[] characteristicSkills,
-           ArrayList<String> possessions, ArrayList<Skill> skills) {
+           ArrayList<String> possessions, ArrayList<Skill> skills, 
+           ArrayList<Skill> combatSkills) {
       this.STR = characteristsics[0];
       this.CON = characteristsics[1];
       this.POW = characteristsics[2];
@@ -85,6 +89,7 @@ public class RPG_Character {
       this.characteristicSkills = characteristicSkills;
       this.possessions = possessions;
       this.skills = skills;
+      this.combatSkills = combatSkills;
    }
 
    /**
@@ -353,5 +358,19 @@ public class RPG_Character {
     */
    public void setDb(DamageBonus db) {
       this.db = db;
+   }
+
+   /**
+    * @return the combatSkills
+    */
+   public ArrayList<Skill> getCombatSkills() {
+      return combatSkills;
+   }
+
+   /**
+    * @param combatSkills the combatSkills to set
+    */
+   public void setCombatSkills(ArrayList<Skill> combatSkills) {
+      this.combatSkills = combatSkills;
    }
 }
