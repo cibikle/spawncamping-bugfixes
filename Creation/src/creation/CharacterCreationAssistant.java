@@ -277,28 +277,32 @@ public class CharacterCreationAssistant {
       new CheckableSkill("Missile Weapon (Throwing Axe)", 00, false),
       new CheckableSkill("Missile Weapon (Throwing Knife)", 00, false)
    };
-   private static final String add20 = "Add 20 Skill points to each of the following skills:\n\t";
-   private static String[] personalityDescs = {
-      "1. Bruiser: Your character believes that solving problems is best handled through quick application of physical force.\n"
-      + add20
-      + "Brawl, Climb, Combat (any two), Dodge, Grapple, Insight, Jump, Ride, Sense, Stealth, Swim, and Throw.\n",
-      "2. Master: Your character believes that technique, craft, and expertise are the keys to success.\n"
-      + add20
-      + "Appraise, Combat (any), Craft, Disguise, Dodge, Fine Manipulation, First Aid, Knowledge (any), Navigate, Pilot, Ride, Sleight of Hand, and Stealth",
-      "3. Thinker: When confronted with opposition, your character's first instinct is to outsmart their opponent to gain as advantage.\n"
-      + add20
-      + "Appraise, Bargain, Combat (any), Disguise, Insight, Knowledge (any two), Listen Research, Sense, Spot, Stealth, and any one Technical skill.",
-      "4. Leader: Your character enjoys calling the shots and persuading other to work.\n"
-      + add20
-      + "Appraise, Bargain, Combat (any), Command, Etiquette, Fast Talk, Insight, Knowledge (any), Language (any), Language (Own), Perform, Persuade, and Sense.",
-      "5. Slacker: Your character has spent their lifetime dodging responsibility and believe that problems are best avoided altogether.\n"
-      + add20
-      + "Bargain, Bureaucracy, Disguise, Dodge, Fast Talk, Gaming, Hide, Insight, Language (any), Persuade, Sense, Slight of Hand, and Spot",
-      "6. Nutter: Your character can safely be categorized as insane, though they are functional and able to work within the organization of the Laundry. Rational thought and problem-solving methods are neglected: insane leaps of logic are the primary means of attaining goals.\n"
-      + add20
-      + "Command, Fast Talk, Hide, Insight, Knowledge (any two), Research, Science (any two), Sense, Spot, Stealth, Strategy.\n"
-      + "Further, reduce SAN by 20 and choose an appropriate mental disorder."
+   private static final String add20 = "Add 20 Skill points to each of the following skills (skill level may not exceed 75):";
+   private static final String[] personalityTypes = {
+      "Bruiser",
+      "Master",
+      "Thinker",
+      "Leader",
+      "Slacker",
+      "Nutter"
    };
+   private static final String[] personalityDescs = {
+      "Bruiser: Your character believes that solving problems is best handled through quick application of physical force.",
+      "Master: Your character believes that technique, craft, and expertise are the keys to success.",
+      "Thinker: When confronted with opposition, your character's first instinct is to outsmart their opponent to gain as advantage.",
+      "Leader: Your character enjoys calling the shots and persuading other to work.",
+      "Slacker: Your character has spent their lifetime dodging responsibility and believe that problems are best avoided altogether.",
+      "Nutter: Your character can safely be categorized as insane, though they are functional and able to work within the organization of the Laundry. Rational thought and problem-solving methods are neglected: insane leaps of logic are the primary means of attaining goals."
+   };
+   private static final String[][] personalityBonuses = {
+      {"Brawl", "Climb", "Combat (any two)", "Dodge", "Grapple", "Insight", "Jump", "Ride", "Sense", "Stealth", "Swim", "Throw"},
+      {"Appraise", "Combat (any)", "Craft", "Disguise", "Dodge", "Fine Manipulation", "First Aid", "Knowledge (any)", "Navigate", "Pilot", "Ride", "Sleight of Hand", "Stealth"},
+      {"Appraise", "Bargain", "Combat (any)", "Disguise", "Insight", "Knowledge (any two)", "Listen", "Research", "Sense", "Spot", "Stealth", "Technology Use (any)"},
+      {"Appraise", "Bargain", "Combat (any)", "Command", "Etiquette", "Fast Talk", "Insight", "Knowledge (any)", "Language (any)", "Language (Own)", "Perform", "Persuade", "Sense"},
+      {"Bargain", "Bureaucracy", "Disguise", "Dodge", "Fast Talk", "Gaming", "Hide", "Insight", "Language (any)", "Persuade", "Sense", "Slight of Hand", "Spot"},
+      {"Command", "Fast Talk", "Hide", "Insight", "Knowledge (any two)", "Research", "Science (any two)", "Sense", "Spot", "Stealth", "Strategy."}
+   };
+   private static final int personalityBonus = 20;
 
    /**
     * @param args the command line arguments
@@ -431,8 +435,11 @@ public class CharacterCreationAssistant {
 
       ArrayList<Skill> skills = new ArrayList<Skill>(Arrays.asList(baseSkillSet));
       ArrayList<Skill> combatSkills = new ArrayList<Skill>(Arrays.asList(baseCombatSkills));
-      println(skills.toString().replaceAll(",", "\n"));
-      println(combatSkills.toString().replaceAll(",", "\n"));
+      
+      pickPersonalityType(skills, combatSkills);
+      
+      //      println(skills.toString().replaceAll(",", "\n"));
+//      println(combatSkills.toString().replaceAll(",", "\n"));
    }
 
    private static int[] getCharacteristicScoresFromUser() throws IOException {
@@ -572,12 +579,57 @@ public class CharacterCreationAssistant {
       }
    }
 
-   private static void pickPersonalityType(ArrayList<CheckableSkill> skills, ArrayList<CheckableSkill> combatSkills) {
+   private static void pickPersonalityType(ArrayList<Skill> skills, ArrayList<Skill> combatSkills) throws IOException {
       String prompt = "How does your character approach life and deal with challenges?\n"
-              + "Choose one of the following options by entering its number or leave it to (c)hance.\n";
+              + "Choose one of the following options by entering its number or leave it to (c)hance.";
+      char[] acceptedResponses = {'1','2','3','4','5','6','c'};
+      char c;
+      int x;
+      
+      println();
       println(prompt);
       //print the types and then get input and then figure out how to apply their choices--how do we handle choosing skills?
-
+      for(int i = 0; i < personalityDescs.length; i++) {
+         println(i+1+". "+personalityDescs[i]);
+      }
+      
+      c = getValidResponseFromUser(prompt, acceptedResponses);
+      if(c == 'c') {
+         x = new Dice(1,6).rollDice()-1;
+      } else {
+         x = Integer.parseInt(Character.toString(c))-1;
+      }
+      
+      println(personalityTypes[x]);
+      println(add20);
+      println(Arrays.toString(personalityBonuses[x]));
+      
+      for(int i = 0; i < personalityBonuses[x].length; i++) {
+         if(personalityBonuses[x][i].contains("any")) {
+            println(personalityBonuses[x][i]);
+            //Combat, Knowledge, Language, Science, Tech Use
+            if(personalityBonuses[x][i].contains("Combat")) {
+               println("combat");
+               //handle combat
+            } else if(personalityBonuses[x][i].contains("Knowledge")) {
+               println("knowledge");
+               //handle knowledge
+            } else if(personalityBonuses[x][i].contains("Language")) {
+               println("language");
+               //handle language
+            } else if(personalityBonuses[x][i].contains("Science")) {
+               println("science");
+               //handle science
+            } else if(personalityBonuses[x][i].contains("Technology")) {
+               println("technology");
+               //handle technology
+            }else {
+               println("Uh-oh. Reached supposedly unreachable point in pickPersonalityType().");
+               println("Please write down the following and contact cibikle@gmail.com:");
+               println(personalityBonuses[x][i]);
+            }
+         }
+      }
    }
 
    private static void print(String s) {
