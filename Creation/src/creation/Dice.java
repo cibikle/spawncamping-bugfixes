@@ -15,22 +15,16 @@ public class Dice {
     private final ArrayList<Die> dice;
     private String name;
     private boolean percentageDice = false;
-    private int addend;
 
-    public Dice(int numOfDice, int sizeOfDie, int addend) {
-        this.addend = addend;
+    public Dice(int numOfDice, int sizeOfDie) {
         this.dice = new ArrayList<Die>();
         name = numOfDice + "d" + sizeOfDie;
         for (int i = 0; i < numOfDice; i++) {
             dice.add(new Die(sizeOfDie));
         }
-        if (addend != 0) {
-            name += " + " + addend;
-        }
     }
 
-    public Dice(int[] numOfDice, int[] sizeOfDie, int addend) throws Exception {
-        this.addend = addend;
+    public Dice(int[] numOfDice, int[] sizeOfDie) throws Exception {
         this.dice = new ArrayList<Die>();
         if (numOfDice.length != sizeOfDie.length) {
             throw new Exception("Number of number of dice did not match number of number of dice sizes: " + numOfDice.length + ", " + sizeOfDie.length + ".");
@@ -44,10 +38,6 @@ public class Dice {
             for (int j = 0; j < numOfDice[i]; j++) {
                 dice.add(new Die(sizeOfDie[i]));
             }
-        }
-
-        if (addend != 0) {
-            name += " + " + addend;
         }
     }
 
@@ -69,6 +59,21 @@ public class Dice {
             for (Die d : dice) {
                 roll += d.roll();
             }
+            return roll;
+        }
+    }
+
+    public int rollDice(int addend) {
+        int roll = 0;
+
+        if (percentageDice) {
+            roll = dice.get(0).roll() * 10;
+            roll += dice.get(0).roll();
+            return roll;
+        } else {
+            for (Die d : dice) {
+                roll += d.roll();
+            }
             return roll + addend;
         }
     }
@@ -77,7 +82,19 @@ public class Dice {
         return dice.size();
     }
 
+    public int getMin(int addend) {
+        return dice.size() + addend;
+    }
+
     public int getMax() {
+        int max = 0;
+        for (Die d : dice) {
+            max += d.getMax();
+        }
+        return max;
+    }
+
+    public int getMax(int addend) {
         int max = 0;
         for (Die d : dice) {
             max += d.getMax();
@@ -90,11 +107,23 @@ public class Dice {
         for (Die d : dice) {
             avg += d.getAvg();
         }
+        return avg;
+    }
+
+    public double getAvg(int addend) {
+        double avg = 0;
+        for (Die d : dice) {
+            avg += d.getAvg();
+        }
         return avg + addend;
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    public String toString(int addend) {
+        return name + addend;
     }
 }
