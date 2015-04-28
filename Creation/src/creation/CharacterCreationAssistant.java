@@ -418,7 +418,7 @@ public class CharacterCreationAssistant {
 
    private static void newCharacter() throws IOException {
       int[] characteristics = {1};
-      int[] derivedCharacteristics = {2};
+      int[] derivedCharacteristics/* = {2}*/;
       DamageBonus db;
       CharacteristicSkill[] characteristicSkills;
       //println("Right now, only PC creation is supported, but you could probably make NPC creation work. Just FYI.");
@@ -550,22 +550,22 @@ public class CharacterCreationAssistant {
    private static int[] getCharacteristicScoresFromUser() throws IOException {
       int[] characteristics = new int[characteristics3d6.length - 1 + characteristics2d6Plus6.length - 1 + characteristics3d6Plus3.length - 1 + characteristics2d6Plus17.length - 1];
       int j = 0;
-      int[] x = getSetOfRolls(3, 18, characteristics3d6);
+      int[] x = getSetOfRolls(new Dice(3,6).getMin(), new Dice(3,6).getMin(), characteristics3d6);
       for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
       }
-      x = getSetOfRolls(8, 18, characteristics2d6Plus6);
+      x = getSetOfRolls(new Dice(2,6).getMin(6), new Dice(2,6).getMax(6), characteristics2d6Plus6);
       for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
       }
-      x = getSetOfRolls(6, 21, characteristics3d6Plus3);
+      x = getSetOfRolls(new Dice(3,6).getMin(3), new Dice(3,6).getMax(3), characteristics3d6Plus3);
       for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
       }
-      x = getSetOfRolls(19, 29, characteristics2d6Plus17);
+      x = getSetOfRolls(new Dice(2,6).getMin(17), new Dice(2,6).getMax(17), characteristics2d6Plus17);
       for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
@@ -631,15 +631,15 @@ public class CharacterCreationAssistant {
             j++;
          }
          for (int i = 0; i < characteristics2d6Plus6.length - 1; i++) {
-            characteristics[j] = twoD6.rollDice() + 6;
+            characteristics[j] = twoD6.rollDice(6);
             j++;
          }
          for (int i = 0; i < characteristics3d6Plus3.length - 1; i++) {
-            characteristics[j] = threeD6.rollDice() + 3;
+            characteristics[j] = threeD6.rollDice(3);
             j++;
          }
          for (int i = 0; i < characteristics2d6Plus17.length - 1; i++) {
-            characteristics[j] = twoD6.rollDice() + 17;
+            characteristics[j] = twoD6.rollDice(17);
             j++;
          }
          println(Arrays.toString(characteristics));
