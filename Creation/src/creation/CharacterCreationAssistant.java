@@ -289,7 +289,7 @@ public class CharacterCreationAssistant {
       "Bruiser: Your character believes that solving problems is best handled through quick application of physical force.",
       "Master: Your character believes that technique, craft, and expertise are the keys to success.",
       "Thinker: When confronted with opposition, your character's first instinct is to outsmart their opponent to gain as advantage.",
-      "Leader: Your character enjoys calling the shots and persuading other to work.",
+      "Leader: Your character enjoys calling the shots and persuading others to work.",
       "Slacker: Your character has spent their lifetime dodging responsibility and believe that problems are best avoided altogether.",
       "Nutter: Your character can safely be categorized as insane, though they are functional and able to work within the organization of the Laundry. Rational thought and problem-solving methods are neglected: insane leaps of logic are the primary means of attaining goals."
    };
@@ -485,8 +485,8 @@ public class CharacterCreationAssistant {
       println("-----");
       println("Choose a profession from the list below and make a note of all the skills used by that profession (additional information on Professions can be found on pp. 22-27 in the rulebook). "
               + "\nYou may distribute a number of Skill Points among professional skills equal to EDU x 20 (" + characteristics[7] * 20 + ", in your case)."
-              + "\nNo skill may be raised higher than 75%. (Language (Own) may start higher than 75% due to the character's EDU; no additional Skill Points may be added to it.)");
-      println("--\nAntiquarian - Appraise, Art (any), Bargain, Craft (any), Fine Manipulation, Knowledge (any), Knowledge (History), Research, and two of the following as personal specialties: Art (any), Knowledge (any), or Science (any).");
+              + "\nNo skill may be raised higher than 75%. (Language (Own) may start higher than 75% due to the character's EDU, but no additional Skill Points may be added to it.)");
+/*      println("--\nAntiquarian - Appraise, Art (any), Bargain, Craft (any), Fine Manipulation, Knowledge (any), Knowledge (History), Research, and two of the following as personal specialties: Art (any), Knowledge (any), or Science (any).");
       println("--\nArtist/Designer - Art (any two), Craft (any), Insight, Knowledge (any appropriate), Language (any), Language (Own), Listen, Research, and Spot.");
       println("--\nClerical Worker - Bargain, Bureaucracy, Computer Use (any), Etiquette, Knowledge (Accounting), Knowledge (any), Knowledge (Law), Language (Own), Persuade, and Research.");
       println("--\nComputer Hacker/Tech - Computer Use (any two), Knowledge (any two), Language (a programming language), Repair (Electrical), Repair (Electronics), Research, Science (Mathematics), Tech Use (any), and choose one of the following as specialties: Bureaucracy, Hide, or Knowledge (Law).");
@@ -507,7 +507,7 @@ public class CharacterCreationAssistant {
       println("--\nScientist - Computer Use (any), Craft (any), Persuade, Research, Tech Use (any), and any five Knowledge or Science skill appropriate to the character's field of study.");
       println("--\nSpy - Dodge, Fast Talk, Hide, Listen, Research, Spot, Stealth, and three of the following: Art (Photography), Brawl, Bureaucracy, Computer Use (any), Disguise, Etiquette, Firearm (any), Grapple, Knowledge (any), Language (any), Language (Own), Navigate, Pilot (any), Psychology, Repair (Electronics), Repair (Mechanical), Ride, Swim, Tech Use (any), Throw, or Track.");
       println("--\nStudent - Language (Own), Research, and eight other skills as courses of study. Common choices: Art (any), Athletics, Computer Use (any), Craft (use), First Aid, Insight, Knowledge (any), Language (any), Listen, Medicine, Perform, Persuade, Psychotherapy, Repair (any), Science (any), or Tech Use (any).");
-
+*/
       acceptedResponses = new char[1];
       acceptedResponses[0] = 'c';
       c = getValidResponseFromUser("(c)ontinue", acceptedResponses);
@@ -550,7 +550,7 @@ public class CharacterCreationAssistant {
    private static int[] getCharacteristicScoresFromUser() throws IOException {
       int[] characteristics = new int[characteristics3d6.length - 1 + characteristics2d6Plus6.length - 1 + characteristics3d6Plus3.length - 1 + characteristics2d6Plus17.length - 1];
       int j = 0;
-      int[] x = getSetOfRolls(new Dice(3,6).getMin(), new Dice(3,6).getMin(), characteristics3d6);
+      int[] x = getSetOfRolls(new Dice(3,6).getMin(), new Dice(3,6).getMax(), characteristics3d6);
       for (int i = 0; i < x.length; i++) {
          characteristics[j] = x[i];
          j++;
