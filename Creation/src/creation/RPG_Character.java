@@ -11,366 +11,440 @@ import java.util.ArrayList;
  * @author cibikle
  */
 public class RPG_Character {
-   private int STR;
-   private int CON;
-   private int POW;
-   private int DEX;
-   private int CHA;
-   private int INT;
-   private int SIZ;
-   private int EDU;
-   private int AGE;
-   private String name;
-   private DamageBonus db;
-   private int maxHP;
-   private int majorWoundLevel;
-   private int xpBonus;
-   private int MOV;
-   private int SAN;
-   private CharacteristicSkill[] characteristicSkills =
-           new CharacteristicSkill[8];
-   private ArrayList<String> possessions = new ArrayList<String>();
-   private ArrayList<Skill> skills = new ArrayList<Skill>();
-   private ArrayList<Skill> combatSkills = new ArrayList<Skill>();
-   
-   public RPG_Character() {
-      
-   }
-   
-   public RPG_Character(int STR, int CON, int POW, int DEX, int CHA, int INT, 
-           int SIZ, int EDU, int AGE, String name, DamageBonus DB, 
-           int maxHP, int majorWoundLevel, int xpBonus, int MOV, int SAN, 
-           CharacteristicSkill[] characteristicSkills,
-           ArrayList<String> possessions, ArrayList<Skill> skills, 
-           ArrayList<Skill> combatSkills) {
-      this.STR = STR;
-      this.CON = CON;
-      this.POW = POW;
-      this.DEX = DEX;
-      this.CHA = CHA;
-      this.INT = INT;
-      this.SIZ = SIZ;
-      this.EDU = EDU;
-      this.AGE = AGE;
-      this.name = name;
-      this.db = DB;
-      this.maxHP = maxHP;
-      this.majorWoundLevel = majorWoundLevel;
-      this.xpBonus = xpBonus;
-      this.MOV = MOV;
-      this.SAN = SAN;
-      this.characteristicSkills = characteristicSkills;
-      this.possessions = possessions;
-      this.skills = skills;
-      this.combatSkills = combatSkills;
-   }
-   
-   public RPG_Character(int[] characteristsics, String name, DamageBonus DB,
-           int[] derivedCharacteristics, 
-           CharacteristicSkill[] characteristicSkills,
-           ArrayList<String> possessions, ArrayList<Skill> skills, 
-           ArrayList<Skill> combatSkills) {
-      this.STR = characteristsics[0];
-      this.CON = characteristsics[1];
-      this.POW = characteristsics[2];
-      this.DEX = characteristsics[3];
-      this.CHA = characteristsics[4];
-      this.INT = characteristsics[5];
-      this.SIZ = characteristsics[6];
-      this.EDU = characteristsics[7];
-      this.AGE = characteristsics[8];
-      this.name = name;
-      this.db = DB;
-      this.maxHP = derivedCharacteristics[0];
-      this.majorWoundLevel = derivedCharacteristics[1];
-      this.xpBonus = derivedCharacteristics[2];
-      this.MOV = derivedCharacteristics[3];
-      this.SAN = derivedCharacteristics[4];
-      this.characteristicSkills = characteristicSkills;
-      this.possessions = possessions;
-      this.skills = skills;
-      this.combatSkills = combatSkills;
-   }
 
-   /**
-    * @return the STR
-    */
-   public int getSTR() {
-      return STR;
-   }
+    private int STR;
+    private int CON;
+    private int POW;
+    private int DEX;
+    private int CHA;
+    private int INT;
+    private int SIZ;
+    private int EDU;
+    private int AGE;
+    private String name;
+    private String playerName;
+    private DamageBonus db;
+    private int maxHP;
+    private int majorWoundLevel;
+    private int currentHP;
+    private int xpBonus;
+    private int MOV;
+    private int maxSAN;
+    private int initialSAN;
+    private int madnessThreshold;
+    private int currentSAN;
+    private CharacteristicSkill[] characteristicSkills
+            = new CharacteristicSkill[8];
+    private ArrayList<String> possessions = new ArrayList<String>();
+    private ArrayList<Skill> skills = new ArrayList<Skill>();
+    private ArrayList<Skill> combatSkills = new ArrayList<Skill>();
 
-   /**
-    * @return the CON
-    */
-   public int getCON() {
-      return CON;
-   }
+    public RPG_Character() {
 
-   /**
-    * @return the POW
-    */
-   public int getPOW() {
-      return POW;
-   }
+    }
 
-   /**
-    * @return the DEX
-    */
-   public int getDEX() {
-      return DEX;
-   }
+    public RPG_Character(int STR, int CON, int POW, int DEX, int CHA, int INT,
+            int SIZ, int EDU, int AGE, String name, DamageBonus DB,
+            int maxHP, int majorWoundLevel, int xpBonus, int MOV, int maxSAN,
+            CharacteristicSkill[] characteristicSkills,
+            ArrayList<String> possessions, ArrayList<Skill> skills,
+            ArrayList<Skill> combatSkills) {
+        this.STR = STR;
+        this.CON = CON;
+        this.POW = POW;
+        this.DEX = DEX;
+        this.CHA = CHA;
+        this.INT = INT;
+        this.SIZ = SIZ;
+        this.EDU = EDU;
+        this.AGE = AGE;
+        this.name = name;
+        this.db = DB;
+        this.maxHP = maxHP;
+        this.majorWoundLevel = majorWoundLevel;
+        this.xpBonus = xpBonus;
+        this.MOV = MOV;
+        this.maxSAN = maxSAN;
+        this.characteristicSkills = characteristicSkills;
+        this.possessions = possessions;
+        this.skills = skills;
+        this.combatSkills = combatSkills;
+    }
 
-   /**
-    * @return the CHA
-    */
-   public int getCHA() {
-      return CHA;
-   }
+    public RPG_Character(int[] characteristsics, String name, DamageBonus DB,
+            int[] derivedCharacteristics,
+            CharacteristicSkill[] characteristicSkills,
+            ArrayList<String> possessions, ArrayList<Skill> skills,
+            ArrayList<Skill> combatSkills) {
+        this.STR = characteristsics[0];
+        this.CON = characteristsics[1];
+        this.POW = characteristsics[2];
+        this.DEX = characteristsics[3];
+        this.CHA = characteristsics[4];
+        this.INT = characteristsics[5];
+        this.SIZ = characteristsics[6];
+        this.EDU = characteristsics[7];
+        this.AGE = characteristsics[8];
+        this.name = name;
+        this.db = DB;
+        this.maxHP = derivedCharacteristics[0];
+        this.majorWoundLevel = derivedCharacteristics[1];
+        this.xpBonus = derivedCharacteristics[2];
+        this.MOV = derivedCharacteristics[3];
+        this.maxSAN = derivedCharacteristics[4];
+        this.characteristicSkills = characteristicSkills;
+        this.possessions = possessions;
+        this.skills = skills;
+        this.combatSkills = combatSkills;
+    }
 
-   /**
-    * @return the INT
-    */
-   public int getINT() {
-      return INT;
-   }
+    /**
+     * @return the STR
+     */
+    public int getSTR() {
+        return STR;
+    }
 
-   /**
-    * @return the SIZ
-    */
-   public int getSIZ() {
-      return SIZ;
-   }
+    /**
+     * @return the CON
+     */
+    public int getCON() {
+        return CON;
+    }
 
-   /**
-    * @return the EDU
-    */
-   public int getEDU() {
-      return EDU;
-   }
+    /**
+     * @return the POW
+     */
+    public int getPOW() {
+        return POW;
+    }
 
-   /**
-    * @return the AGE
-    */
-   public int getAGE() {
-      return AGE;
-   }
+    /**
+     * @return the DEX
+     */
+    public int getDEX() {
+        return DEX;
+    }
 
-   /**
-    * @return the name
-    */
-   public String getName() {
-      return name;
-   }
+    /**
+     * @return the CHA
+     */
+    public int getCHA() {
+        return CHA;
+    }
 
-   /**
-    * @return the maxHP
-    */
-   public int getMaxHP() {
-      return maxHP;
-   }
+    /**
+     * @return the INT
+     */
+    public int getINT() {
+        return INT;
+    }
 
-   /**
-    * @return the majorWoundLevel
-    */
-   public int getMajorWoundLevel() {
-      return majorWoundLevel;
-   }
+    /**
+     * @return the SIZ
+     */
+    public int getSIZ() {
+        return SIZ;
+    }
 
-   /**
-    * @return the xpBonus
-    */
-   public int getXpBonus() {
-      return xpBonus;
-   }
+    /**
+     * @return the EDU
+     */
+    public int getEDU() {
+        return EDU;
+    }
 
-   /**
-    * @return the MOV
-    */
-   public int getMOV() {
-      return MOV;
-   }
+    /**
+     * @return the AGE
+     */
+    public int getAGE() {
+        return AGE;
+    }
 
-   /**
-    * @return the SAN
-    */
-   public int getSAN() {
-      return SAN;
-   }
-   
-   /**
-    * @return the characteristicSkills
-    */
-   public CharacteristicSkill[] getCharacteristicSkills() {
-      return characteristicSkills;
-   }
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-   /**
-    * @return the possessions
-    */
-   public ArrayList<String> getPossessions() {
-      return possessions;
-   }
+    /**
+     * @return the maxHP
+     */
+    public int getMaxHP() {
+        return maxHP;
+    }
 
-   /**
-    * @return the skills
-    */
-   public ArrayList<Skill> getSkills() {
-      return skills;
-   }
+    /**
+     * @return the majorWoundLevel
+     */
+    public int getMajorWoundLevel() {
+        return majorWoundLevel;
+    }
 
-   /**
-    * @return the db
-    */
-   public DamageBonus getDb() {
-      return db;
-   }
+    /**
+     * @return the xpBonus
+     */
+    public int getXpBonus() {
+        return xpBonus;
+    }
 
-   /**
-    * @param STR the STR to set
-    */
-   public void setSTR(int STR) {
-      this.STR = STR;
-   }
+    /**
+     * @return the MOV
+     */
+    public int getMOV() {
+        return MOV;
+    }
 
-   /**
-    * @param CON the CON to set
-    */
-   public void setCON(int CON) {
-      this.CON = CON;
-   }
+    /**
+     * @return the maxSAN
+     */
+    public int getSAN() {
+        return maxSAN;
+    }
 
-   /**
-    * @param POW the POW to set
-    */
-   public void setPOW(int POW) {
-      this.POW = POW;
-   }
+    /**
+     * @return the characteristicSkills
+     */
+    public CharacteristicSkill[] getCharacteristicSkills() {
+        return characteristicSkills;
+    }
 
-   /**
-    * @param DEX the DEX to set
-    */
-   public void setDEX(int DEX) {
-      this.DEX = DEX;
-   }
+    /**
+     * @return the possessions
+     */
+    public ArrayList<String> getPossessions() {
+        return possessions;
+    }
 
-   /**
-    * @param CHA the CHA to set
-    */
-   public void setCHA(int CHA) {
-      this.CHA = CHA;
-   }
+    /**
+     * @return the skills
+     */
+    public ArrayList<Skill> getSkills() {
+        return skills;
+    }
 
-   /**
-    * @param INT the INT to set
-    */
-   public void setINT(int INT) {
-      this.INT = INT;
-   }
+    /**
+     * @return the db
+     */
+    public DamageBonus getDb() {
+        return db;
+    }
 
-   /**
-    * @param SIZ the SIZ to set
-    */
-   public void setSIZ(int SIZ) {
-      this.SIZ = SIZ;
-   }
+    /**
+     * @param STR the STR to set
+     */
+    public void setSTR(int STR) {
+        this.STR = STR;
+    }
 
-   /**
-    * @param EDU the EDU to set
-    */
-   public void setEDU(int EDU) {
-      this.EDU = EDU;
-   }
+    /**
+     * @param CON the CON to set
+     */
+    public void setCON(int CON) {
+        this.CON = CON;
+    }
 
-   /**
-    * @param AGE the AGE to set
-    */
-   public void setAGE(int AGE) {
-      this.AGE = AGE;
-   }
+    /**
+     * @param POW the POW to set
+     */
+    public void setPOW(int POW) {
+        this.POW = POW;
+    }
 
-   /**
-    * @param name the name to set
-    */
-   public void setName(String name) {
-      this.name = name;
-   }
-   
+    /**
+     * @param DEX the DEX to set
+     */
+    public void setDEX(int DEX) {
+        this.DEX = DEX;
+    }
 
-   /**
-    * @param maxHP the maxHP to set
-    */
-   public void setMaxHP(int maxHP) {
-      this.maxHP = maxHP;
-   }
+    /**
+     * @param CHA the CHA to set
+     */
+    public void setCHA(int CHA) {
+        this.CHA = CHA;
+    }
 
-   /**
-    * @param majorWoundLevel the majorWoundLevel to set
-    */
-   public void setMajorWoundLevel(int majorWoundLevel) {
-      this.majorWoundLevel = majorWoundLevel;
-   }
+    /**
+     * @param INT the INT to set
+     */
+    public void setINT(int INT) {
+        this.INT = INT;
+    }
 
-   /**
-    * @param xpBonus the xpBonus to set
-    */
-   public void setXpBonus(int xpBonus) {
-      this.xpBonus = xpBonus;
-   }
+    /**
+     * @param SIZ the SIZ to set
+     */
+    public void setSIZ(int SIZ) {
+        this.SIZ = SIZ;
+    }
 
-   /**
-    * @param MOV the MOV to set
-    */
-   public void setMOV(int MOV) {
-      this.MOV = MOV;
-   }
+    /**
+     * @param EDU the EDU to set
+     */
+    public void setEDU(int EDU) {
+        this.EDU = EDU;
+    }
 
-   /**
-    * @param SAN the SAN to set
-    */
-   public void setSAN(int SAN) {
-      this.SAN = SAN;
-   }
-   
-   /**
-    * @param characteristicSkills the characteristicSkills to set
-    */
-   public void setCharacteristicSkills(CharacteristicSkill[]
-           characteristicSkills) {
-      this.characteristicSkills = characteristicSkills;
-   }
+    /**
+     * @param AGE the AGE to set
+     */
+    public void setAGE(int AGE) {
+        this.AGE = AGE;
+    }
 
-   /**
-    * @param possessions the possessions to set
-    */
-   public void setPossessions(ArrayList<String> possessions) {
-      this.possessions = possessions;
-   }
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   /**
-    * @param skills the skills to set
-    */
-   public void setSkills(ArrayList<Skill> skills) {
-      this.skills = skills;
-   }
+    /**
+     * @param maxHP the maxHP to set
+     */
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
 
-   /**
-    * @param db the db to set
-    */
-   public void setDb(DamageBonus db) {
-      this.db = db;
-   }
+    /**
+     * @param majorWoundLevel the majorWoundLevel to set
+     */
+    public void setMajorWoundLevel(int majorWoundLevel) {
+        this.majorWoundLevel = majorWoundLevel;
+    }
 
-   /**
-    * @return the combatSkills
-    */
-   public ArrayList<Skill> getCombatSkills() {
-      return combatSkills;
-   }
+    /**
+     * @param xpBonus the xpBonus to set
+     */
+    public void setXpBonus(int xpBonus) {
+        this.xpBonus = xpBonus;
+    }
 
-   /**
-    * @param combatSkills the combatSkills to set
-    */
-   public void setCombatSkills(ArrayList<Skill> combatSkills) {
-      this.combatSkills = combatSkills;
-   }
+    /**
+     * @param MOV the MOV to set
+     */
+    public void setMOV(int MOV) {
+        this.MOV = MOV;
+    }
+
+    /**
+     * @param SAN the maxSAN to set
+     */
+    public void setSAN(int SAN) {
+        this.maxSAN = SAN;
+    }
+
+    /**
+     * @param characteristicSkills the characteristicSkills to set
+     */
+    public void setCharacteristicSkills(CharacteristicSkill[] characteristicSkills) {
+        this.characteristicSkills = characteristicSkills;
+    }
+
+    /**
+     * @param possessions the possessions to set
+     */
+    public void setPossessions(ArrayList<String> possessions) {
+        this.possessions = possessions;
+    }
+
+    /**
+     * @param skills the skills to set
+     */
+    public void setSkills(ArrayList<Skill> skills) {
+        this.skills = skills;
+    }
+
+    /**
+     * @param db the db to set
+     */
+    public void setDb(DamageBonus db) {
+        this.db = db;
+    }
+
+    /**
+     * @return the combatSkills
+     */
+    public ArrayList<Skill> getCombatSkills() {
+        return combatSkills;
+    }
+
+    /**
+     * @param combatSkills the combatSkills to set
+     */
+    public void setCombatSkills(ArrayList<Skill> combatSkills) {
+        this.combatSkills = combatSkills;
+    }
+
+    /**
+     * @return the playerName
+     */
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    /**
+     * @param playerName the playerName to set
+     */
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    /**
+     * @return the currentHP
+     */
+    public int getCurrentHP() {
+        return currentHP;
+    }
+
+    /**
+     * @param currentHP the currentHP to set
+     */
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
+    }
+
+    /**
+     * @return the initialSAN
+     */
+    public int getInitialSAN() {
+        return initialSAN;
+    }
+
+    /**
+     * @param initialSAN the initialSAN to set
+     */
+    public void setInitialSAN(int initialSAN) {
+        this.initialSAN = initialSAN;
+    }
+
+    /**
+     * @return the madnessThreshold
+     */
+    public int getMadnessThreshold() {
+        return madnessThreshold;
+    }
+
+    /**
+     * @param madnessThreshold the madnessThreshold to set
+     */
+    public void setMadnessThreshold(int madnessThreshold) {
+        this.madnessThreshold = madnessThreshold;
+    }
+
+    /**
+     * @return the currentSAN
+     */
+    public int getCurrentSAN() {
+        return currentSAN;
+    }
+
+    /**
+     * @param currentSAN the currentSAN to set
+     */
+    public void setCurrentSAN(int currentSAN) {
+        this.currentSAN = currentSAN;
+    }
 }
