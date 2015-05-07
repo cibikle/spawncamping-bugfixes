@@ -42,6 +42,7 @@ public class RPG_Character implements Serializable {
    private int initialSAN;
    private int madnessThreshold;
    private int currentSAN;
+   private String personalityType;
    private CharacteristicSkill[] characteristicSkills = new CharacteristicSkill[8];
    private ArrayList<String> possessions = new ArrayList<String>();
    private ArrayList<Skill> skills = new ArrayList<Skill>();
@@ -542,5 +543,19 @@ public class RPG_Character implements Serializable {
     */
    public void setCurrentSAN(int currentSAN) {
       this.currentSAN = currentSAN;
+   }
+
+   /**
+    * @return the personalityType
+    */
+   public String getPersonalityType() {
+      return personalityType;
+   }
+
+   /**
+    * @param personalityType the personalityType to set
+    */
+   public void setPersonalityType(String personalityType) {
+      this.personalityType = personalityType;
    }
 }
