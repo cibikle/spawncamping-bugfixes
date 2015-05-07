@@ -468,7 +468,7 @@ public class CharacterCreationAssistant {
 
       println("-----");
 
-      pickPersonalityType(skills, combatSkills);
+      pickPersonalityType(newCharacter);
 
       //println("(c)ontinue");
       acceptedResponses[0] = 'c';
@@ -677,28 +677,7 @@ public class CharacterCreationAssistant {
       }
    }
 
-   private static void deriveTrueBaseLangOwnAndDodge(int[] characteristics, ArrayList<Skill> skills, ArrayList<Skill> combatSkills) {
-      skills.get(indexOf(skills, "Language (Own: EDUx5%)")).setSkillLevel(characteristics[7] * 5);//TODO: fix this rubbish
-      combatSkills.get(indexOf(combatSkills, "Dodge")).setSkillLevel(characteristics[3] * 2);
-   }
-
-   private static int indexOf(ArrayList<Skill> skills, String target) {
-      if (skills.isEmpty()) {
-         return -1;
-      }
-      int i = 0;
-      for (Skill s : skills) {
-         if (s.getName().equals(target)) {
-            return i;
-         } else {
-            i++;
-         }
-      }
-
-      return -1;
-   }
-
-   private static void pickPersonalityType(ArrayList<Skill> skills, ArrayList<Skill> combatSkills) throws IOException {
+   private static void pickPersonalityType(RPG_Character newCharacter) throws IOException {
       int indexOfChosenPersonality;
 
       println(pickPersonalityTypePrompt);
@@ -717,11 +696,12 @@ public class CharacterCreationAssistant {
          indexOfChosenPersonality = new Dice(1, 5).rollDice() - 1;
       }
 
-      println(personalityTypes[indexOfChosenPersonality]);
-      personalityTypeBonuses(indexOfChosenPersonality, combatSkills);
+      newCharacter.setPersonalityType(personalityTypes[indexOfChosenPersonality]);
+      println(newCharacter.getPersonalityType());
+      personalityTypeBonuses(indexOfChosenPersonality, newCharacter);
    }
 
-   private static void personalityTypeBonuses(int indexOfChosenPersonality, ArrayList<Skill> combatSkills) throws IOException {
+   private static void personalityTypeBonuses(int indexOfChosenPersonality, RPG_Character newCharacter) throws IOException {
       //int numOfSkillSpecializations;
       String nutterPenalty;
       if (indexOfChosenPersonality == 5) {
