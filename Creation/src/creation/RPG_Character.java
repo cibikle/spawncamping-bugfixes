@@ -282,6 +282,16 @@ public class RPG_Character implements Serializable {
         return db;
     }
 
+    public int[] getCharacteristics() {
+        int[] characteristics = {STR,CON,POW,DEX,CHA,INT,SIZ,EDU,AGE};
+        return characteristics;
+    }
+    
+    public int[] getDerivedCharacteristics() {
+        int[] derivedCharacteristics = {maxHP,majorWoundLevel,xpBonus,MOV,maxSAN};
+        return derivedCharacteristics;
+    }
+    
     /**
      * @param STR the STR to set
      */
@@ -415,6 +425,26 @@ public class RPG_Character implements Serializable {
         this.db = db;
     }
 
+    public void setCharacteristics(int[] characteristics) {
+        STR = characteristics[0];
+        CON = characteristics[1];
+        POW = characteristics[2];
+        DEX = characteristics[3];
+        CHA = characteristics[4];
+        INT = characteristics[5];
+        SIZ = characteristics[6];
+        EDU = characteristics[7];
+        AGE = characteristics[8];
+    }
+    
+    public void setDerivedCharacteristics(int[] derivedCharacteristics) {
+        maxHP = derivedCharacteristics[0];
+        majorWoundLevel = derivedCharacteristics[1];
+        xpBonus = derivedCharacteristics[2];
+        MOV = derivedCharacteristics[3];
+        maxSAN = derivedCharacteristics[4];
+    }
+    
     /**
      * @return the combatSkills
      */
