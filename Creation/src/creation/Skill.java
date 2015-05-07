@@ -33,6 +33,7 @@ public class Skill {
       skillLevel += (addend);
    }
    
+   @Override
    public String toString() {
       return name+": "+skillLevel;
    }
