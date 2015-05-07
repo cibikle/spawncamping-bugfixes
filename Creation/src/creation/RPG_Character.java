@@ -4,13 +4,23 @@
  */
 package creation;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author cibikle
  */
-public class RPG_Character {
+public class RPG_Character implements Serializable {
 
     private int STR;
     private int CON;
@@ -96,6 +106,47 @@ public class RPG_Character {
         this.possessions = possessions;
         this.skills = skills;
         this.combatSkills = combatSkills;
+    }
+
+    public RPG_Character loadFromFile(String fileName) {
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(fileName);
+            ObjectInputStream reader = new ObjectInputStream(in);
+            return (RPG_Character) reader.readObject();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RPG_Character.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RPG_Character.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RPG_Character.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                in.close();
+            } catch (IOException ex) {
+                Logger.getLogger(RPG_Character.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+    
+    public void saveToFile(String fileName) {
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream(fileName));
+            out.writeObject(this);
+            out.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RPG_Character.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RPG_Character.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                out.close();
+            } catch (IOException ex) {
+                Logger.getLogger(RPG_Character.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
