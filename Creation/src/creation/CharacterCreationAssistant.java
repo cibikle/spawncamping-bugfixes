@@ -772,28 +772,16 @@ public class CharacterCreationAssistant {
             int indexOfChosenSpec;
             if (baseCombatSkills[indexOfChosenSkill].getName().toLowerCase().contains("artillery")) {
                 indexOfChosenSpec = getValidIntFromUser(prepareMsg(artillerySpecializations), 0, artillerySpecializations.length);
-                if (newCharacter.getCombatSkill(artillerySpecializations[indexOfChosenSpec].getName()) == null) {
-                    newCharacter.getCombatSkills().add(newCharacter.getCombatSkills().indexOf(newCharacter.getCombatSkill("Artillery (various)"))+1,artillerySpecializations[indexOfChosenSpec]);
-                }
-                newCharacter.getCombatSkill(artillerySpecializations[indexOfChosenSpec].getName()).updateSkillLevelByValue(improvement);
+                improveCombatSpecialization(newCharacter, artillerySpecializations, "Artillery (various)", indexOfChosenSpec, improvement);
             } else if (baseCombatSkills[indexOfChosenSkill].getName().toLowerCase().contains("heavy")) {
                 indexOfChosenSpec = getValidIntFromUser(prepareMsg(heavyWeaponSpecializations), 0, heavyWeaponSpecializations.length);
-                if (newCharacter.getCombatSkill(heavyWeaponSpecializations[indexOfChosenSpec].getName()) == null) {
-                    newCharacter.getCombatSkills().add(newCharacter.getCombatSkills().indexOf(newCharacter.getCombatSkill("Heavy Weapon (various)"))+1,heavyWeaponSpecializations[indexOfChosenSpec]);
-                }
-                newCharacter.getCombatSkill(heavyWeaponSpecializations[indexOfChosenSpec].getName()).updateSkillLevelByValue(improvement);
+                improveCombatSpecialization(newCharacter, heavyWeaponSpecializations, "Heavy Weapon (various)", indexOfChosenSpec, improvement);
             } else if (baseCombatSkills[indexOfChosenSkill].getName().toLowerCase().contains("melee")) {
                 indexOfChosenSpec = getValidIntFromUser(prepareMsg(meleeWeaponSpecializations), 0, meleeWeaponSpecializations.length);
-                if (newCharacter.getCombatSkill(meleeWeaponSpecializations[indexOfChosenSpec].getName()) == null) {
-                    newCharacter.getCombatSkills().add(newCharacter.getCombatSkills().indexOf(newCharacter.getCombatSkill("Melee Weapon (various)"))+1,meleeWeaponSpecializations[indexOfChosenSpec]);
-                }
-                newCharacter.getCombatSkill(meleeWeaponSpecializations[indexOfChosenSpec].getName()).updateSkillLevelByValue(improvement);
+                improveCombatSpecialization(newCharacter, meleeWeaponSpecializations, "Melee Weapon (various)", indexOfChosenSpec, improvement);
             } else if (baseCombatSkills[indexOfChosenSkill].getName().toLowerCase().contains("missile")) {
                 indexOfChosenSpec = getValidIntFromUser(prepareMsg(missileWeaponSpecializations), 0, missileWeaponSpecializations.length);
-                if (newCharacter.getCombatSkill(missileWeaponSpecializations[indexOfChosenSpec].getName()) == null) {
-                    newCharacter.getCombatSkills().add(newCharacter.getCombatSkills().indexOf(newCharacter.getCombatSkill("Missile Weapon (various)"))+1,missileWeaponSpecializations[indexOfChosenSpec]);
-                }
-                newCharacter.getCombatSkill(missileWeaponSpecializations[indexOfChosenSpec].getName()).updateSkillLevelByValue(improvement);
+                improveCombatSpecialization(newCharacter, missileWeaponSpecializations, "Missile Weapon (various)", indexOfChosenSpec, improvement);
             } else {
                 println("Uh-oh. Reached supposedly unreachable point in pickPersonalityType().");
                 println("Please write down the following and contact cibikle@gmail.com:");
@@ -816,16 +804,35 @@ public class CharacterCreationAssistant {
         return msg;
     }
 
+    private static void improveSpecialization(RPG_Character newCharacter, Skill[] specializations, String specialization, int indexOfChosenSpec, int improvement) {
+        if (newCharacter.getSkill(specializations[indexOfChosenSpec].getName()) == null) {
+            println("HI!");
+            newCharacter.getSkills().add(newCharacter.getSkills().indexOf(newCharacter.getSkill(specialization)) + 1, specializations[indexOfChosenSpec]);
+            println("I added a skill!");
+        }
+        newCharacter.getSkill(specializations[indexOfChosenSpec].getName()).updateSkillLevelByValue(improvement);
+    }
+    
+    private static void improveCombatSpecialization(RPG_Character newCharacter, Skill[] specializations, String specialization, int indexOfChosenSpec, int improvement) {
+        if (newCharacter.getCombatSkill(specializations[indexOfChosenSpec].getName()) == null) {
+            //println("HI!");
+            newCharacter.getCombatSkills().add(newCharacter.getCombatSkills().indexOf(newCharacter.getCombatSkill(specialization)) + 1, specializations[indexOfChosenSpec]);
+            //println("I added a skill!");
+        }
+        newCharacter.getCombatSkill(specializations[indexOfChosenSpec].getName()).updateSkillLevelByValue(improvement);
+    }
+    
     private static void print(String s) {
         System.out.print(s);
     }
 
     private static void println() {
-        System.out.println();
+        print("\n");
     }
 
     private static void println(String s) {
-        System.out.println(s);
+        print(s);
+        println();
     }
 
     private static void printArrayAsOptionList(Object[] a) {
@@ -861,3 +868,11 @@ public class CharacterCreationAssistant {
         println("Damage Bonus: " + newCharacter.getDb());
     }
 }
+
+
+//TODO: merge getValidRollFromUser() and getValidIntFromUser()
+//TODO: that thing to make pickCombatOptions() less dumb
+//TODO: pickKnowledgeOptions()
+//TODO: pickLanguageOptions()
+//TODO: pickScienceOptions()
+//TODO: pickTechnologyOptions()
