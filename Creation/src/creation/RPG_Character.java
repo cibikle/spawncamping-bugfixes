@@ -558,4 +558,22 @@ public class RPG_Character implements Serializable {
    public void setPersonalityType(String personalityType) {
       this.personalityType = personalityType;
    }
+   
+   @Override
+   public String toString() {
+       String character = "";
+       character += "STR: "+STR+" - "+characteristicSkills[0]+"\n";
+       character += "CON: "+CON+" - "+characteristicSkills[1]+"\n";
+       character += "POW: "+POW+" - "+characteristicSkills[2]+"\n";
+       character += "DEX: "+DEX+" - "+characteristicSkills[3]+"\n";
+       character += "CHA: "+CHA+" - "+characteristicSkills[4]+"\n";
+       character += "INT: "+INT+" - "+characteristicSkills[5]+"\n";
+       character += "SIZ: "+SIZ+" - "+db+"\n";
+       character += "EDU: "+EDU+" - "+characteristicSkills[7]+"\n";
+       //etc
+       for(Skill s : combatSkills) {
+           character += s.toString()+"\n";
+       }
+       return character;
+   }
 }
