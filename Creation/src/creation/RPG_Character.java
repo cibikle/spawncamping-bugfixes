@@ -76,7 +76,6 @@ public class RPG_Character implements Serializable {
         this.characteristicSkills = characteristicSkills;
         this.possessions = possessions;
         this.skills = skills;
-        this.skills.addAll(combatSkills);
         this.combatSkills = combatSkills;
     }
 
@@ -104,7 +103,6 @@ public class RPG_Character implements Serializable {
         this.characteristicSkills = characteristicSkills;
         this.possessions = possessions;
         this.skills = skills;
-        this.skills.addAll(combatSkills);
         this.combatSkills = combatSkills;
     }
 
@@ -574,6 +572,9 @@ public class RPG_Character implements Serializable {
         character += "EDU: " + EDU + " - " + characteristicSkills[7] + "\n";
         //etc
         for (Skill s : skills) {
+            character += s.toString() + "\n";
+        }
+        for (Skill s : combatSkills) {
             character += s.toString() + "\n";
         }
         return character;
