@@ -573,7 +573,7 @@ public class RPG_Character implements Serializable {
         character += "SIZ: " + SIZ + " - " + db + "\n";
         character += "EDU: " + EDU + " - " + characteristicSkills[7] + "\n";
         //etc
-        for (Skill s : combatSkills) {
+        for (Skill s : skills) {
             character += s.toString() + "\n";
         }
         return character;
