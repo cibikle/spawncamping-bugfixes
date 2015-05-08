@@ -76,6 +76,7 @@ public class RPG_Character implements Serializable {
         this.characteristicSkills = characteristicSkills;
         this.possessions = possessions;
         this.skills = skills;
+        this.skills.addAll(combatSkills);
         this.combatSkills = combatSkills;
     }
 
@@ -103,6 +104,7 @@ public class RPG_Character implements Serializable {
         this.characteristicSkills = characteristicSkills;
         this.possessions = possessions;
         this.skills = skills;
+        this.skills.addAll(combatSkills);
         this.combatSkills = combatSkills;
     }
 
@@ -270,10 +272,7 @@ public class RPG_Character implements Serializable {
      * @return the skills
      */
     public ArrayList<Skill> getSkills() {
-        ArrayList<Skill> skillList = new ArrayList<Skill>();
-        skillList.addAll(skills);
-        skillList.addAll(combatSkills);
-        return skillList;
+        return skills;
     }
 
     public Skill getSkill(String skillName) {
@@ -282,7 +281,7 @@ public class RPG_Character implements Serializable {
                 return s;
             }
         }
-        return getCombatSkill(skillName);
+        return null;
     }
 
     public Skill getCombatSkill(String skillName) {
