@@ -279,7 +279,7 @@ public class RPG_Character implements Serializable {
             return s;
          }
       }
-      return null;
+      return getCombatSkill(skillName);
    }
    
    public Skill getCombatSkill(String skillName) {
