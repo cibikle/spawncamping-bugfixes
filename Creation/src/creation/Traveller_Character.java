@@ -14,9 +14,15 @@ public class Traveller_Character implements Serializable {
     private String homeworldName;
     private String[] homeworldCharacteristics;
     private Skill[] skills;
+    private int age;
     
     public Traveller_Character() {
         
+    }
+    
+    public Traveller_Character(int[] characteristics) {
+        this.characteristics = characteristics;
+        this.characteristicsDMs = calcCharacteristicDMs(this.characteristics);
     }
     
     public Traveller_Character(int[] characteristics, Skill[] skills) {
