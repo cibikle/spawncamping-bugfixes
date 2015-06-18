@@ -73,15 +73,17 @@ public class TravellerCreator {
 "Vacuum: Vacc Suit 0"};
     
     public static void main(String[] args) {
+        int[] characteristics = {0,0,0,0,0};
         for(int i = 0; i < 5; i++) {
-            rollForCharacteristics();
+            characteristics = rollForCharacteristics();
         }
+        Traveller_Character newcharacter = new Traveller_Character(characteristics);
         chooseHomeworld();
     }
 /**
  * characteristic rolls and dice modifiers
 */
-    public static void rollForCharacteristics() {
+    public static int[] rollForCharacteristics() {
         Dice ch = new Dice(2, 6);
         int[] characteristics = new int[6];
         int[] dms = new int[6];
@@ -94,7 +96,7 @@ public class TravellerCreator {
         System.out.println(Arrays.toString(characteristics));
         System.out.println(Arrays.toString(dms));
         
-        
+        return characteristics;
     }
 
     /**
