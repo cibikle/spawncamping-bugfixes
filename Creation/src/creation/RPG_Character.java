@@ -570,6 +570,7 @@ public class RPG_Character implements Serializable {
         character += "INT: " + INT + " - " + characteristicSkills[5] + "\n";
         character += "SIZ: " + SIZ + " - " + db + "\n";
         character += "EDU: " + EDU + " - " + characteristicSkills[7] + "\n";
+        character += "AGE: " + AGE + "\n";
         //etc
         for (Skill s : skills) {
             character += s.toString() + "\n";
