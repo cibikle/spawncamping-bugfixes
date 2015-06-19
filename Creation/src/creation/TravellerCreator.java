@@ -18,57 +18,73 @@ import java.util.Arrays;
  * (From page 5 of the 2008 Traveller book. Yes, I'm aware I shouldn't be
  * reproducing this without permission. I'll throw it out when I'm done.)
  *
- * 1. Roll characteristics and determine characteristic modifiers 2. a. Choose a
- * homeworld b. Gain background skills 3. a. Choose a career. You cannot choose
- * a career you already have. b. Roll to qualify for that career. c. If you
- * qualify for that career, go to Step 4. d. If you do not qualify for a career,
- * then you can go to the Draft or enter the Drifter career. The Draft can put
- * you back into a career you have been forced to leave, at your old rank. You
- * can only apply for the Draft once. 4. If this is your first time in this
- * career, get your basic training. 5. Choose a specialization for this career.
+ * 1. Roll characteristics and determine characteristic modifiers 
+ * 2. a. Choose a homeworld 
+ *    b. Gain background skills 
+ * 3. a. Choose a career. You cannot choose a career you already have. 
+ *    b. Roll to qualify for that career. 
+ *    c. If you qualify for that career, go to Step 4.
+ *    d. If you do not qualify for a career, then you can go to the Draft
+ * or enter the Drifter career. The Draft can put you back into a career
+ * you have been forced to leave, at your old rank. You can only apply for
+ * the Draft once.
+ * 4. If this is your first time in this career, get your basic training.
+ * 5. Choose a specialization for this career.
  * 6. a. Choose one of the Skills and Training tables for this career and roll
- * on it. b. Roll for survival on this career. c. If you succeed, go to Step 7.
- * d. If you did not succeed, then events have forced you from this career. Roll
- * on the Mishap table, then go to Step 9. 7. a. Roll for Events. b. Optionally,
- * establish a Connection with another player character. 8. a. Roll for
- * Advancement. b. If you succeed, choose one of the skills and training tables
- * for this career and roll on it. Increase your rank and take any bonus skills
- * from the Ranks table for this career. c. If you roll less than the number of
- * turns spent in this career, you must leave this career. d. Military
- * characters (Army, Navy, Marines) can roll for commission instead of rolling
- * for advancement. 9. Increase your age by 4 years. If your character is 34 or
- * older, roll for Aging. 10. If you are leaving the career, roll for Benefits.
+ * on it.
+ *    b. Roll for survival on this career.
+ *    c. If you succeed, go to Step 7.
+ *    d. If you did not succeed, then events have forced you from this career.
+ * Roll on the Mishap table, then go to Step 9. 
+ * 7. a. Roll for Events. 
+ *    b. Optionally,establish a Connection with another player character.
+ * 8. a. Roll for Advancement. 
+ *    b. If you succeed, choose one of the skills and training tables for
+ * this career and roll on it. Increase your rank and take any bonus skills
+ * from the Ranks table for this career. 
+ *    c. If you roll less than the number of turns spent in this career,
+ * you must leave this career. 
+ *    d. Military characters (Army, Navy, Marines) can roll for commission
+ * instead of rolling for advancement. 
+ * 9. Increase your age by 4 years. If your character is 34 or older, roll
+ * for Aging. 
+ * 10. If you are leaving the career, roll for Benefits.
  * 11. If you have left your current career, then go to Step 3 to choose a new
  * career, or to Step 12 if you wish to finish your character. Otherwise, go to
- * Step 5. 12. Finalize any Connections with other characters. 13. Choose a
- * Campaign Skill Pack and allocate skills from that pack. 14. Purchase starting
- * equipment and, if you can afford it, a spacecraft.
+ * Step 5.
+ * 12. Finalize any Connections with other characters.
+ * 13. Choose a Campaign Skill Pack and allocate skills from that pack.
+ * 14. Purchase starting equipment and, if you can afford it, a spacecraft.
  *
  */
 public class TravellerCreator {
 
-    static String homeworldCharacteristicsAndSkills[] = {"Agricultural: Animals 0\n",
-        "Asteroid: Zero-G 0\n",
-        "Desert: Survival 0\n",
-        "Fluid Oceans: Seafarer 0\n",
-        "Garden: Animals 0\n",
-        "High Technology: Computers 0\n",
-        "High Population: Streetwise 0\n",
-        "Ice-Capped: Vacc Suit 0\n",
-        "Industrial: Trade 0\n",
-        "Low Technology: Survival 0\n",
-        "Poor: Animals 0\n",
-        "Rich: Carouse 0\n",
-        "Water World: Seafarer 0\n",
+    static String[] homeworldCharacteristicsAndSkills = {
+        "Agricultural: Animals 0",
+        "Asteroid: Zero-G 0",
+        "Desert: Survival 0",
+        "Fluid Oceans: Seafarer 0",
+        "Garden: Animals 0",
+        "High Technology: Computers 0",
+        "High Population: Streetwise 0",
+        "Ice-Capped: Vacc Suit 0",
+        "Industrial: Trade 0",
+        "Low Technology: Survival 0",
+        "Poor: Animals 0",
+        "Rich: Carouse 0",
+        "Water World: Seafarer 0",
         "Vacuum: Vacc Suit 0"};
+    static int[][] homeworldMutualExclusives = {{9,10},{10,9},};
     private static BufferedReader kb;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         kb = new BufferedReader(new InputStreamReader(System.in));
-        int[] characteristics = {0, 0, 0, 0, 0};
-        for (int i = 0; i < 5; i++) {
+        int[] characteristics = {0, 0, 0, 0, 0, 0};
+        char[] validResponses = {'k','r'};
+        do {
             characteristics = rollForCharacteristics();
-        }
+        } while('r'==getValidResponseFromUser("(K)eep or (R)eroll?", validResponses));
+        
         Traveller_Character newcharacter = new Traveller_Character(characteristics);
         chooseHomeworld();
     }
@@ -148,6 +164,7 @@ public class TravellerCreator {
 
     /**
      * characteristic rolls and dice modifiers
+     * @return characteristics as int array
      */
     public static int[] rollForCharacteristics() {
         Dice ch = new Dice(2, 6);
@@ -177,7 +194,12 @@ public class TravellerCreator {
                 + "Referee, then consult those sources for the planet’s description.\n"
                 + "Otherwise, just note down what traits you chose for your homeworld\n"
                 + "– you can generate the world later using the rules on page 167.";
-        System.out.println(instructions);
-        System.out.println(Arrays.toString(homeworldCharacteristicsAndSkills));
+        String addendum = "If it helps, imagine that, instead of choosing your\n"
+                + "character's homworld characteristics, you are choosing the\n"
+                + "characteristics of the character's home environment.";
+        println(instructions);
+        println(addendum);
+        //System.out.println(Arrays.toString(homeworldCharacteristicsAndSkills));
+        printArrayAsOptionList(homeworldCharacteristicsAndSkills);
     }
 }
